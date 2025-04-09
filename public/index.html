@@ -121,6 +121,27 @@ document.getElementById("openEditProfileFromModal").addEventListener("click", fu
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </style>
 </head>
 <body class="bg-gray-100">
@@ -203,6 +224,50 @@ document.getElementById("openEditProfileFromModal").addEventListener("click", fu
                 </button>
             </div>
         </aside>
+
+
+
+
+
+
+<!-- SIDEBAR MÓVIL (Bottom navbar) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50">
+  <ul class="flex justify-around py-2">
+    <li>
+      <button id="mobileEditBtn" class="flex flex-col items-center text-gray-600 hover:text-blue-600 transition">
+        <span class="text-xl">⚙️</span>
+        <span class="text-xs">Editar</span>
+      </button>
+    </li>
+    <li>
+      <button id="mobileCrearBtn" class="flex flex-col items-center text-gray-600 hover:text-blue-600 transition">
+        <span class="text-xl">➕</span>
+        <span class="text-xs">Crear</span>
+      </button>
+    </li>
+    <li>
+      <button id="mobileVenderBtn" class="flex flex-col items-center text-gray-600 hover:text-blue-600 transition">
+        <span class="text-xl">🛒</span>
+        <span class="text-xs">Vender</span>
+      </button>
+    </li>
+    <li>
+      <button id="mobilePerfilBtn" class="relative flex flex-col items-center text-gray-600 hover:text-blue-600 transition">
+        <!-- Imagen de perfil (oculta por defecto) -->
+        <img id="mobileProfilePic" src="" alt="Perfil"
+          class="hidden w-9 h-9 rounded-full border-2 border-blue-500 shadow-md" />
+        <!-- Ícono por defecto -->
+        <span id="mobileProfileIcon" class="text-xl">👤</span>
+        <span class="text-xs">Perfil</span>
+      </button>
+    </li>
+  </ul>
+</nav>
+
+
+
+
+
 
         
     <!-- Main Content -->
@@ -597,6 +662,18 @@ document.getElementById("openEditProfileFromModal").addEventListener("click", fu
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 
@@ -924,15 +1001,16 @@ let currentAccountType = "usuario";
 onAuthStateChanged(auth, async (user) => {
   console.log("🔄 Detectando cambios en la sesión...", user);
 
+  // Elementos del DOM
   const loginBtn = document.getElementById("loginBtn");
   const profileContainer = document.getElementById("profileContainer");
-  const profilePic = document.getElementById("profilePic");
-  const profileName = document.getElementById("profileName");
   const profileContainerSidebar = document.getElementById("profileContainerSidebar");
-  const profilePicSidebar = document.getElementById("profilePicSidebar");
-  const usernameSidebar = document.getElementById("usernameSidebar");
-  const profilePicModal = document.getElementById("profilePicModal");
   const publishBtn = document.getElementById("publishBtn");
+  
+  // Elementos móviles
+  const mobileProfilePic = document.getElementById("mobileProfilePic");
+  const mobileProfileIcon = document.getElementById("mobileProfileIcon");
+  const mobilePerfilBtn = document.getElementById("mobilePerfilBtn");
 
   if (user) {
     console.log("✅ Sesión detectada: ", user.uid);
@@ -961,47 +1039,15 @@ onAuthStateChanged(auth, async (user) => {
       currentAccountType = userData.accountType || "usuario";
       mainPhoto = userData.modalPhotoURL || userData.photoURL || mainPhoto;
 
-      if (profilePicModal) profilePicModal.src = mainPhoto;
-      if (profileName) profileName.textContent = userData.name || "Usuario";
-      if (profilePic) profilePic.src = mainPhoto;
-      if (profilePicSidebar) profilePicSidebar.src = mainPhoto;
-      if (usernameSidebar) usernameSidebar.textContent = userData.name || "Usuario";
-
+      // Actualizar UI
+      updateProfileUI(userData, mainPhoto);
       await syncAccountTypeUI(user);
 
-      if (loginBtn) loginBtn.style.display = "none";
-      if (profileContainer) profileContainer.style.display = "block";
-      if (profileContainerSidebar) profileContainerSidebar.classList.remove("hidden");
-
-      profileContainerSidebar.addEventListener("click", () => {
-        const isSeller = userData.accountType === "vendedor";
-
-        document.getElementById("profileModal")?.classList.add("hidden");
-        document.getElementById("sellerProfileModal")?.classList.add("hidden");
-
-        if (isSeller) {
-          document.getElementById("sellerProfilePic").src = userData.modalPhotoURL || userData.photoURL || "https://via.placeholder.com/100";
-          document.getElementById("sellerName").textContent = userData.name || "Vendedor";
-          document.getElementById("sellerUsername").textContent = "@" + (userData.username || "usuario");
-          document.getElementById("sellerBio").textContent = userData.bio || "";
-          document.getElementById("sellerProfileModal").classList.remove("hidden");
-        } else {
-          document.getElementById("modalProfileName").textContent = userData.name || "Usuario";
-          document.getElementById("modalProfileUsername").textContent = "@" + (userData.username || "usuario");
-          document.getElementById("modalProfileBio").textContent = userData.bio || "";
-          document.getElementById("profilePicModal").src = userData.modalPhotoURL || userData.photoURL || "https://via.placeholder.com/80";
-
-          document.getElementById("profileModal").classList.remove("hidden");
-          document.getElementById("modalContent")?.classList.remove("scale-95", "opacity-0");
-        }
-      });
+      // Configurar eventos de clic
+      setupProfileClickHandlers(userData, mainPhoto);
 
       if (unsubscribePosts) unsubscribePosts();
-
-      setTimeout(() => {
-        console.log("📡 Iniciando listenForPosts()");
-        listenForPosts();
-      }, 400);
+      setTimeout(() => listenForPosts(), 400);
 
       userDataLoaded = true;
       if (publishBtn) publishBtn.disabled = false;
@@ -1012,18 +1058,120 @@ onAuthStateChanged(auth, async (user) => {
       userDataLoaded = false;
     }
   } else {
-    console.log("🚪 No hay usuario, cerrando sesión visual...");
-
-    if (loginBtn) loginBtn.style.display = "block";
-    if (profileContainer) profileContainer.style.display = "none";
-    if (profileContainerSidebar) profileContainerSidebar.classList.add("hidden");
-
-    hideProfileOnLogout();
+    handleLogoutUI();
     if (unsubscribePosts) unsubscribePosts();
     if (publishBtn) publishBtn.disabled = true;
     userDataLoaded = false;
   }
 });
+
+// Funciones auxiliares
+function updateProfileUI(userData, mainPhoto) {
+  // Actualizar elementos de perfil
+  const profileElements = [
+    { id: "profilePicModal", prop: "src", value: mainPhoto },
+    { id: "profileName", prop: "textContent", value: userData.name || "Usuario" },
+    { id: "profilePic", prop: "src", value: mainPhoto },
+    { id: "profilePicSidebar", prop: "src", value: mainPhoto },
+    { id: "usernameSidebar", prop: "textContent", value: userData.name || "Usuario" },
+    { id: "mobileProfilePic", prop: "src", value: mainPhoto }
+  ];
+
+  profileElements.forEach(el => {
+    const element = document.getElementById(el.id);
+    if (element) {
+      if (el.prop === "src") element.src = el.value;
+      else element[el.prop] = el.value;
+    }
+  });
+
+  // Mostrar/ocultar elementos móviles
+  const mobileProfilePic = document.getElementById("mobileProfilePic");
+  const mobileProfileIcon = document.getElementById("mobileProfileIcon");
+  if (mobileProfilePic && mobileProfileIcon) {
+    mobileProfilePic.classList.remove("hidden");
+    mobileProfileIcon.classList.add("hidden");
+  }
+
+  // Mostrar contenedores de perfil
+  const loginBtn = document.getElementById("loginBtn");
+  const profileContainer = document.getElementById("profileContainer");
+  const profileContainerSidebar = document.getElementById("profileContainerSidebar");
+  
+  if (loginBtn) loginBtn.style.display = "none";
+  if (profileContainer) profileContainer.style.display = "block";
+  if (profileContainerSidebar) profileContainerSidebar.classList.remove("hidden");
+}
+
+function setupProfileClickHandlers(userData, mainPhoto) {
+  // Función para mostrar el modal apropiado
+  const showProfileModal = () => {
+    document.getElementById("profileModal")?.classList.add("hidden");
+    document.getElementById("sellerProfileModal")?.classList.add("hidden");
+
+    if (userData.accountType === "vendedor") {
+      const sellerModal = document.getElementById("sellerProfileModal");
+      if (sellerModal) {
+        document.getElementById("sellerProfilePic").src = mainPhoto;
+        document.getElementById("sellerName").textContent = userData.name || "Vendedor";
+        document.getElementById("sellerUsername").textContent = "@" + (userData.username || "usuario");
+        document.getElementById("sellerBio").textContent = userData.bio || "";
+        sellerModal.classList.remove("hidden");
+      }
+    } else {
+      const userModal = document.getElementById("profileModal");
+      if (userModal) {
+        document.getElementById("modalProfileName").textContent = userData.name || "Usuario";
+        document.getElementById("modalProfileUsername").textContent = "@" + (userData.username || "usuario");
+        document.getElementById("modalProfileBio").textContent = userData.bio || "";
+        document.getElementById("profilePicModal").src = mainPhoto;
+        userModal.classList.remove("hidden");
+        document.getElementById("modalContent")?.classList.remove("scale-95", "opacity-0");
+      }
+    }
+  };
+
+  // Configurar eventos para desktop
+  const profileContainerSidebar = document.getElementById("profileContainerSidebar");
+  if (profileContainerSidebar) {
+    profileContainerSidebar.removeEventListener("click", showProfileModal); // Eliminar evento previo si existe
+    profileContainerSidebar.addEventListener("click", showProfileModal);
+  }
+
+  // Configurar eventos para móvil
+  const mobilePerfilBtn = document.getElementById("mobilePerfilBtn");
+  if (mobilePerfilBtn) {
+    mobilePerfilBtn.removeEventListener("click", showProfileModal); // Eliminar evento previo si existe
+    mobilePerfilBtn.addEventListener("click", showProfileModal);
+  }
+}
+
+function handleLogoutUI() {
+  console.log("🚪 No hay usuario, cerrando sesión visual...");
+
+  // Ocultar elementos de perfil
+  const loginBtn = document.getElementById("loginBtn");
+  const profileContainer = document.getElementById("profileContainer");
+  const profileContainerSidebar = document.getElementById("profileContainerSidebar");
+  
+  if (loginBtn) loginBtn.style.display = "block";
+  if (profileContainer) profileContainer.style.display = "none";
+  if (profileContainerSidebar) profileContainerSidebar.classList.add("hidden");
+
+  // Restablecer botón móvil
+  const mobileProfilePic = document.getElementById("mobileProfilePic");
+  const mobileProfileIcon = document.getElementById("mobileProfileIcon");
+  if (mobileProfilePic && mobileProfileIcon) {
+    mobileProfilePic.classList.add("hidden");
+    mobileProfileIcon.classList.remove("hidden");
+  }
+
+  hideProfileOnLogout();
+}
+
+
+
+
 
 
 
@@ -1196,6 +1344,11 @@ async function loadProfileCounts(uid) {
 
 
 
+
+
+
+
+
 // ========== 🔧 FUNCIONES GLOBALES ==========
 function openModal() {
   const user = auth.currentUser;
@@ -1264,13 +1417,15 @@ function closeModal() {
   }, 300);
 }
 
-// ✅ Listeners para el modal
+// ✅ Listeners para el modal (PC y móvil)
 document.addEventListener("DOMContentLoaded", () => {
   const profileContainerSidebar = document.getElementById("profileContainerSidebar");
+  const mobilePerfilBtn = document.getElementById("mobilePerfilBtn");
   const closeProfileModal = document.getElementById("closeProfileModal");
   const modalOverlay = document.getElementById("modalOverlay");
 
   profileContainerSidebar?.addEventListener("click", openModal);
+  mobilePerfilBtn?.addEventListener("click", openModal);
   closeProfileModal?.addEventListener("click", closeModal);
   modalOverlay?.addEventListener("click", closeModal);
 
@@ -1281,7 +1436,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// 👉 Abrir modal de login al tocar el botón
+// 👉 Abrir modal de login
 document.getElementById("loginBtn")?.addEventListener("click", () => {
   const modal = document.getElementById("loginModal");
   if (modal) {
@@ -1298,7 +1453,6 @@ document.getElementById("closeModal")?.addEventListener("click", () => {
     modal.style.display = "none";
   }
 });
-
 
 // 👉 Listener para botón de login como vendedor
 document.getElementById("sellerLoginBtn")?.addEventListener("click", () => {
@@ -1679,6 +1833,10 @@ document.getElementById("editProfileModal")?.addEventListener("click", (e) => {
 
 
 
+
+
+
+
 function renderPostHTML(docData, userData = {}, postId = "") {
   const safeUser = {
     username: docData.username || userData.username || "usuario",
@@ -1689,87 +1847,124 @@ function renderPostHTML(docData, userData = {}, postId = "") {
 
   const uid = docData?.uid || userData?.uid || "";
 
-  // 📦 Post tipo "venta"
- // 📦 Post tipo "venta"
-if (docData.tipo === "venta") {
-  return `
-    <div class="post bg-yellow-100 p-5 rounded shadow-md mt-4 border border-yellow-300" data-post-id="${postId}">
-      <div class="flex items-center mb-2">
-        <img src="${safeUser.photoURL}" class="w-10 h-10 rounded-full cursor-pointer profile-pic-clickable" data-uid="${uid}" data-account-type="${safeUser.accountType}" />
-        <span class="ml-2 text-blue-600 cursor-pointer username-link" data-uid="${uid}" data-account-type="${safeUser.accountType}">@${safeUser.username}</span>
+  // 📦 Post tipo "venta" - Diseño mejorado
+  if (docData.tipo === "venta") {
+    return `
+    <div class="post bg-gradient-to-br from-yellow-50 to-yellow-100 p-5 rounded-lg shadow-md mt-4 border border-yellow-200 hover:shadow-lg transition-shadow duration-300" data-post-id="${postId}">
+      <div class="flex items-center mb-3">
+        <img src="${safeUser.photoURL}" class="w-10 h-10 rounded-full cursor-pointer profile-pic-clickable object-cover border-2 border-yellow-300" data-uid="${uid}" data-account-type="${safeUser.accountType}" />
+        <div class="ml-3">
+          <span class="text-blue-600 font-medium cursor-pointer username-link hover:text-blue-800 transition-colors" data-uid="${uid}" data-account-type="${safeUser.accountType}">@${safeUser.username}</span>
+          <div class="text-xs text-gray-500">${new Date(docData.timestamp?.toDate() || Date.now()).toLocaleString()}</div>
+        </div>
       </div>
-      <h3 class="text-lg font-semibold text-gray-800 mb-1">${docData.titulo || "Producto sin título"}</h3>
-      <p class="text-gray-700 mb-1">${docData.descripcion || ""}</p>
-      <p class="text-green-700 font-bold mb-2">💲${docData.precio || 0}</p>
-      ${
-        docData.imagen
-          ? docData.isVideo
-            ? `<video class="media-clickable w-full max-h-60 object-cover rounded cursor-pointer mb-3" src="${docData.imagen}" controls></video>`
-            : `<img src="${docData.imagen}" class="media-clickable w-full max-h-60 object-cover rounded cursor-pointer mb-3" />`
-          : ""
+      
+      <h3 class="text-xl font-bold text-gray-800 mb-2">${docData.titulo || "Producto sin título"}</h3>
+      <p class="text-gray-700 mb-3 leading-relaxed">${docData.descripcion || ""}</p>
+      
+      ${docData.imagen
+        ? docData.isVideo
+          ? `<div class="relative rounded-lg overflow-hidden mb-3">
+               <video class="media-clickable w-full h-64 object-cover rounded-lg cursor-pointer transform hover:scale-[1.02] transition-transform" src="${docData.imagen}" controls></video>
+               <div class="absolute bottom-0 left-0 bg-black bg-opacity-50 text-white p-2 w-full">
+                 <span class="text-sm">💰 <span class="font-bold text-lg">${docData.precio || 0}</span> USD</span>
+               </div>
+             </div>`
+          : `<div class="relative rounded-lg overflow-hidden mb-3">
+               <img src="${docData.imagen}" class="media-clickable w-full h-64 object-cover rounded-lg cursor-pointer transform hover:scale-[1.02] transition-transform" />
+               <div class="absolute bottom-0 left-0 bg-black bg-opacity-50 text-white p-2 w-full">
+                 <span class="text-sm">💰 <span class="font-bold text-lg">${docData.precio || 0}</span> USD</span>
+               </div>
+             </div>`
+        : `<div class="bg-yellow-200 p-4 rounded-lg mb-3 text-center">
+             <span class="text-yellow-800">💰 Precio: <span class="font-bold">${docData.precio || 0}</span> USD</span>
+           </div>`
       }
 
-      <div class="flex justify-between mt-2 text-sm">
-        <div class="space-x-3 text-gray-600">
-          <button class="toggle-comments-btn bg-gray-200 px-3 py-1 rounded cursor-pointer">💬 Comentarios</button>
-          <button class="hover:text-red-500">❤️</button>
+      <div class="flex justify-between items-center mt-3">
+        <div class="flex space-x-3">
+          <button class="toggle-comments-btn bg-white hover:bg-gray-100 px-3 py-2 rounded-full cursor-pointer shadow-sm transition-colors flex items-center">
+            <span class="mr-1">💬</span> <span class="text-sm">Comentarios</span>
+          </button>
+          <button class="like-btn hover:text-red-500 px-3 py-2 rounded-full transition-colors flex items-center">
+            <span class="mr-1">❤️</span> <span class="text-sm">Me gusta</span>
+          </button>
         </div>
-        <button class="comprar-btn bg-green-500 text-white px-4 py-1 rounded" data-post-id="${postId}" data-precio="${docData.precio}" data-titulo="${docData.titulo}">🛒 Comprar</button>
+        <button class="comprar-btn bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-5 py-2 rounded-full shadow-md transition-all transform hover:scale-105 flex items-center" data-post-id="${postId}" data-precio="${docData.precio}" data-titulo="${docData.titulo}">
+          <span class="mr-2">🛒</span> Comprar
+        </button>
       </div>
 
-      <div class="comments-section hidden mt-3">
-        <div class="comments-list text-sm space-y-1"></div>
-        <input type="text" class="comment-input border p-2 w-full rounded mb-2" placeholder="Escribe un comentario...">
-        <button class="comment-submit bg-blue-500 text-white px-4 py-1 rounded" data-post-id="${postId}">Enviar</button>
+      <div class="comments-section hidden mt-4 pt-3 border-t border-yellow-200">
+        <div class="comments-list space-y-3 mb-3"></div>
+        <div class="flex">
+          <input type="text" class="comment-input flex-grow border border-yellow-300 p-3 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Escribe un comentario...">
+          <button class="comment-submit bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-3 rounded-r-lg transition-colors" data-post-id="${postId}">Enviar</button>
+        </div>
       </div>
     </div>
-  `;
-}
+    `;
+  }
 
-  // ✍️ Post normal
+  // ✍️ Post normal - Diseño mejorado
   return `
-    <div class="post bg-white p-5 rounded shadow-md mt-4" data-post-id="${postId}">
-      <div class="flex items-center mb-2">
+    <div class="post bg-white p-5 rounded-lg shadow-md mt-4 hover:shadow-lg transition-shadow duration-300" data-post-id="${postId}">
+      <div class="flex items-center mb-3">
         <img src="${safeUser.photoURL}"
-             class="w-10 h-10 rounded-full cursor-pointer profile-pic-clickable"
+             class="w-10 h-10 rounded-full cursor-pointer profile-pic-clickable object-cover border-2 border-blue-200"
              data-uid="${uid}"
              data-account-type="${safeUser.accountType}"
              alt="Foto de ${safeUser.name}"
              onerror="this.src='https://via.placeholder.com/40'" />
-        <span class="ml-2 text-blue-600 cursor-pointer username-link"
-              data-uid="${uid}"
-              data-account-type="${safeUser.accountType}">
-          @${safeUser.username}
-        </span>
+        <div class="ml-3">
+          <span class="text-blue-600 font-medium cursor-pointer username-link hover:text-blue-800 transition-colors"
+                data-uid="${uid}"
+                data-account-type="${safeUser.accountType}">
+            @${safeUser.username}
+          </span>
+          <div class="text-xs text-gray-500">${new Date(docData.timestamp?.toDate() || Date.now()).toLocaleString()}</div>
+        </div>
       </div>
-      <p class="text-gray-700">${docData.text || ""}</p>
+      
+      <p class="text-gray-700 mb-3 leading-relaxed">${docData.text || ""}</p>
+      
       ${
         docData.mediaURL
           ? docData.isVideo
-            ? `<video class="media-clickable mt-2 max-h-60 mx-auto rounded cursor-pointer" src="${docData.mediaURL}" controls></video>`
-            : `<div class="mt-2">
+            ? `<div class="relative rounded-lg overflow-hidden mb-3">
+                 <video class="media-clickable w-full h-64 object-cover rounded-lg cursor-pointer transform hover:scale-[1.02] transition-transform" src="${docData.mediaURL}" controls></video>
+               </div>`
+            : `<div class="relative rounded-lg overflow-hidden mb-3">
                  <img src="${docData.mediaURL}"
-                      class="media-clickable max-h-40 object-cover mx-auto rounded cursor-pointer"
+                      class="media-clickable w-full h-64 object-cover rounded-lg cursor-pointer transform hover:scale-[1.02] transition-transform"
                       alt="Contenido multimedia"
                       onerror="this.style.display='none'" />
                </div>`
           : ""
       }
-      <div class="flex mt-3 space-x-4">
-        <button class="toggle-comments-btn bg-gray-200 px-3 py-1 rounded cursor-pointer">💬 Comentarios</button>
-        <button class="text-red-500">❤️</button>
-        <button class="text-gray-600">🔗</button>
+      
+      <div class="flex space-x-2 mt-3">
+        <button class="toggle-comments-btn bg-white hover:bg-gray-100 px-3 py-2 rounded-full cursor-pointer shadow-sm transition-colors flex items-center">
+          <span class="mr-1">💬</span> <span class="text-sm">Comentarios</span>
+        </button>
+        <button class="like-btn hover:text-red-500 px-3 py-2 rounded-full transition-colors flex items-center">
+          <span class="mr-1">❤️</span> <span class="text-sm">Me gusta</span>
+        </button>
+        <button class="share-btn hover:text-blue-500 px-3 py-2 rounded-full transition-colors flex items-center">
+          <span class="mr-1">🔗</span> <span class="text-sm">Compartir</span>
+        </button>
       </div>
-      <div class="comments-section hidden mt-3">
-        <div class="comments-list text-sm space-y-1"></div>
-        <input type="text" class="comment-input border p-2 w-full rounded mb-2" placeholder="Escribe un comentario..." />
-        <button class="comment-submit bg-blue-500 text-white px-4 py-1 rounded" data-post-id="${postId}">Enviar</button>
+      
+      <div class="comments-section hidden mt-4 pt-3 border-t border-gray-200">
+        <div class="comments-list space-y-3 mb-3"></div>
+        <div class="flex">
+          <input type="text" class="comment-input flex-grow border border-gray-300 p-3 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Escribe un comentario..." />
+          <button class="comment-submit bg-blue-500 hover:bg-blue-600 text-white px-4 py-3 rounded-r-lg transition-colors" data-post-id="${postId}">Enviar</button>
+        </div>
       </div>
     </div>
   `;
 }
-
-
 
 
 
@@ -2775,10 +2970,6 @@ document.addEventListener("click", async (e) => {
 
 
 
-
-
-
-
 async function loadComments(postId, container) {
   const commentsList = container.querySelector(".comments-list");
   if (!commentsList) return console.warn("⚠️ No se encontró .comments-list");
@@ -2860,6 +3051,82 @@ async function loadComments(postId, container) {
         });
 
         // (El resto de tus scripts aquí)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  document.getElementById("mobileEditBtn").addEventListener("click", () => {
+    document.getElementById("openEditProfileFromModal").click();
+  });
+
+  document.getElementById("mobileCrearBtn").addEventListener("click", () => {
+    document.getElementById("crearPublicacionBtn").click();
+  });
+
+  document.getElementById("mobileVenderBtn").addEventListener("click", () => {
+    document.getElementById("venderBtn").click();
+  });
+
+  // Adaptamos el botón de perfil en móvil (mismo comportamiento que loginBtn)
+  document.getElementById("loginBtnMobile").addEventListener("click", () => {
+    document.getElementById("loginBtn").click();
+  });
+
+  // Función que simula el login y actualiza ambos perfiles
+  function mostrarPerfil(nombreUsuario, fotoUrl) {
+    // Mostrar en PC
+    document.getElementById("loginBtn").classList.add("hidden");
+    document.getElementById("profileContainerSidebar").classList.remove("hidden");
+    document.getElementById("usernameSidebar").innerText = nombreUsuario;
+    document.getElementById("profilePicSidebar").src = fotoUrl;
+
+    // Mostrar en móvil
+    document.getElementById("loginBtnMobile").classList.add("hidden");
+    document.getElementById("profileContainerMobile").classList.remove("hidden");
+    document.getElementById("profilePicMobile").src = fotoUrl;
+  }
+
+  // Simulación: ya estabas logueado
+  // mostrarPerfil("Carlos", "https://i.pravatar.cc/100");
+
+
+
+
+
+
+
+
+
+
 
 
 
