@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Perfil de Usuario</title>
 
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -10,13 +12,6 @@
 
 /* Estilos del contenedor de perfil */
 #profileContainer {
-document.getElementById("openEditProfileFromModal").addEventListener("click", function () {
-    // Cerrar el modal del perfil
-    closeModal();
-
-    // Abrir el modal de edición de perfil
-    openEditProfileModal();
-});
     position: fixed;
     top: 10px;
     right: 10px;
@@ -29,6 +24,7 @@ document.getElementById("openEditProfileFromModal").addEventListener("click", fu
     justify-content: center;
     background-color: #ddd; /* Color para visualizar */
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    display: none;
 }
 
 #profileContainer img {
@@ -38,8 +34,7 @@ document.getElementById("openEditProfileFromModal").addEventListener("click", fu
     border-radius: 50%;
 }
 
-
-
+/* Estilos para el modal */
 .modal {
     display: none;
     position: fixed;
@@ -74,58 +69,32 @@ document.getElementById("openEditProfileFromModal").addEventListener("click", fu
     opacity: 0;
 }
 
-#profileContainer {
-    display: none;
+/* Estilos para la transición del sidebar */
+.sidebar-collapsed .sidebar-text {
+    opacity: 0;
+    width: 0;
+    margin-left: 0;
+    margin-right: 0;
+    position: absolute;
 }
 
+.sidebar-collapsed .sidebar-icon {
+    font-size: 1.5rem;
+    margin: 0 auto;
+}
 
+.sidebar-collapsed {
+    width: 5rem !important;
+}
 
+.sidebar-collapsed .sidebar-content {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
 
-
-
-/* Estilos para la transición del sidebar */
-        .sidebar-collapsed .sidebar-text {
-            opacity: 0;
-            width: 0;
-            margin-left: 0;
-            margin-right: 0;
-            position: absolute;
-        }
-        
-        .sidebar-collapsed .sidebar-icon {
-            font-size: 1.5rem;
-            margin: 0 auto;
-        }
-        
-        .sidebar-collapsed {
-            width: 5rem !important;
-        }
-        
-        .sidebar-collapsed .sidebar-content {
-            padding-left: 0.75rem;
-            padding-right: 0.75rem;
-        }
-        
-        .sidebar-collapsed #mainContent {
-            margin-left: 5rem;
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.sidebar-collapsed #mainContent {
+    margin-left: 5rem;
+}
 
 
 
@@ -144,75 +113,101 @@ document.getElementById("openEditProfileFromModal").addEventListener("click", fu
 
 </style>
 </head>
-<body class="bg-gray-100">
-    <div class="flex min-h-screen bg-gray-50">
-        <!-- Sidebar deslizable mejorado -->
-        <aside id="sidebar" class="bg-white shadow-md sticky top-0 h-screen overflow-y-auto transition-all duration-300 ease-in-out w-64">
-            <!-- Botón para contraer/expandir -->
-            <button id="toggleSidebar" class="absolute -right-3 top-5 bg-white rounded-full shadow-md p-1 z-10 hover:bg-gray-100 transition">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+
+<body class="bg-gray-50 dark:bg-gray-900">
+    <div class="flex min-h-screen">
+        <!-- Sidebar moderno con glassmorphism -->
+        <aside id="sidebar" class="bg-white/80 dark:bg-gray-800/90 backdrop-blur-lg border-r border-gray-200 dark:border-gray-700 sticky top-0 h-screen overflow-y-auto transition-all duration-300 ease-in-out w-72 shadow-xl">
+            <!-- Botón para contraer/expandir mejorado -->
+            <button id="toggleSidebar" class="absolute -right-3 top-5 bg-white dark:bg-gray-700 rounded-full shadow-lg p-1.5 z-10 hover:bg-gray-100 dark:hover:bg-gray-600 transition-all hover:scale-110">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
             </button>
 
             <!-- Contenido del sidebar -->
-            <div class="p-5 sidebar-content">
-                <!-- Logo/Brand con transición -->
-                <div class="mb-8 flex items-center transition-all duration-300">
-                    <h1 class="text-2xl font-bold text-blue-600 whitespace-nowrap sidebar-text">SocialApp</h1>
+            <div class="p-6 sidebar-content">
+                <!-- Logo/Brand premium -->
+                <div class="mb-10 flex items-center transition-all duration-300 group">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center shadow-md mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                    </div>
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent whitespace-nowrap sidebar-text">SocialApp</h1>
                 </div>
 
-                <!-- Contenedor de Login / Perfil -->
-                <div id="authContainer" class="mb-6">
-                      <button id="loginBtn" class="w-full flex items-center justify-center overflow-hidden bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg mb-4 transition duration-200">
-
-                        <span class="sidebar-icon">👤</span>
-                        <span class="sidebar-text ml-2">Iniciar sesión</span>
+                <!-- Contenedor de Login / Perfil mejorado -->
+                <div id="authContainer" class="mb-8">
+                    <button id="loginBtn" class="w-full flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white p-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        <span class="sidebar-text ml-3 font-medium">Iniciar sesión</span>
                     </button>
 
-                    <!-- Contenedor del perfil -->
-                    <div id="profileContainerSidebar" class="hidden flex items-center p-3 rounded-lg hover:bg-gray-100 cursor-pointer transition">
-                        <img id="profilePicSidebar" src="https://via.placeholder.com/50" alt="Perfil" class="w-10 h-10 rounded-full object-cover">
-                        <span id="usernameSidebar" class="font-medium whitespace-nowrap sidebar-text ml-3">Usuario</span>
+                    <!-- Contenedor del perfil premium -->
+                    <div id="profileContainerSidebar" class="hidden group flex items-center p-3 rounded-xl bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-all duration-300 shadow-sm">
+                        <div class="relative">
+                            <img id="profilePicSidebar" src="https://via.placeholder.com/50" alt="Perfil" class="w-11 h-11 rounded-xl object-cover border-2 border-white dark:border-gray-600 shadow-md">
+                            <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white dark:border-gray-700"></div>
+                        </div>
+                        <div class="ml-3">
+                            <span id="usernameSidebar" class="font-semibold text-gray-800 dark:text-white whitespace-nowrap sidebar-text block">Usuario</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Menú de navegación -->
-                <nav class="mb-6">
-                    <ul class="space-y-2">
+                <!-- Menú de navegación premium -->
+                <nav class="mb-8">
+                    <ul class="space-y-1.5">
                         <li>
-                            <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-100 transition duration-200">
-                                <span class="sidebar-icon">📦</span>
-                                <span class="sidebar-text ml-3">Pedidos</span>
-                                <span class="ml-auto bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded-full sidebar-text">5</span>
+                            <a href="#" class="flex items-center p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-all duration-200 group">
+                                <div class="sidebar-icon w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:bg-blue-200 dark:group-hover:bg-blue-800/30 transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                                    </svg>
+                                </div>
+                                <span class="sidebar-text ml-3 text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">Pedidos</span>
+                                <span class="ml-auto bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs px-2 py-1 rounded-full font-medium">5</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-100 transition duration-200">
-                                <span class="sidebar-icon">🔔</span>
-                                <span class="sidebar-text ml-3">NotifixD</span>
-                                <span class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full">3</span>
+                            <a href="#" class="flex items-center p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-all duration-200 group">
+                                <div class="sidebar-icon w-8 h-8 rounded-lg bg-red-100 dark:bg-red-900/30 flex items-center justify-center text-red-600 dark:text-red-400 group-hover:bg-red-200 dark:group-hover:bg-red-800/30 transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                    </svg>
+                                </div>
+                                <span class="sidebar-text ml-3 text-gray-700 dark:text-gray-300 group-hover:text-red-600 dark:group-hover:text-red-400">NotifixD</span>
+                                <span class="ml-auto bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-xs px-2 py-1 rounded-full font-medium">3</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-100 transition duration-200">
-                                <span class="sidebar-icon">💬</span>
-                                <span class="sidebar-text ml-3">Chats</span>
+                            <a href="#" class="flex items-center p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-all duration-200 group">
+                                <div class="sidebar-icon w-8 h-8 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 group-hover:bg-green-200 dark:group-hover:bg-green-800/30 transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                    </svg>
+                                </div>
+                                <span class="sidebar-text ml-3 text-gray-700 dark:text-gray-300 group-hover:text-green-600 dark:group-hover:text-green-400">Chats</span>
                             </a>
                         </li>
                         <li>
-
-<button id="openEditProfileFromModal" class="w-full flex items-center p-3 rounded-lg hover:bg-gray-100 transition">
-  <span class="sidebar-icon">⚙️</span>
-  <span class="sidebar-text ml-3">Editar</span>
-</button>
-
-
-
+                            <button id="openEditProfileFromModal" class="w-full flex items-center p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-all duration-200 group text-left">
+                                <div class="sidebar-icon w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400 group-hover:bg-purple-200 dark:group-hover:bg-purple-800/30 transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </div>
+                                <span class="sidebar-text ml-3 text-gray-700 dark:text-gray-300 group-hover:text-purple-600 dark:group-hover:text-purple-400">Editar</span>
+                            </button>
                         </li>
                     </ul>
                 </nav>
 
+                
                 <!-- Botones -->
                 <button id="crearPublicacionBtn" class="w-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg mt-4 transition duration-200 shadow-md">
                     <span class="sidebar-icon">+</span>
@@ -230,37 +225,68 @@ document.getElementById("openEditProfileFromModal").addEventListener("click", fu
 
 
 
+
+
+
+
 <!-- SIDEBAR MÓVIL (Bottom navbar) -->
 <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50">
   <ul class="flex justify-around py-2">
+
+    <!-- Editar (⚙️ → Icono SVG) -->
     <li>
       <button id="mobileEditBtn" class="flex flex-col items-center text-gray-600 hover:text-blue-600 transition">
-        <span class="text-xl">⚙️</span>
-        <span class="text-xs">Editar</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+        <span class="text-xs mt-1">Editar</span>
       </button>
     </li>
+
+    <!-- Crear (➕ → Icono SVG) -->
     <li>
       <button id="mobileCrearBtn" class="flex flex-col items-center text-gray-600 hover:text-blue-600 transition">
-        <span class="text-xl">➕</span>
-        <span class="text-xs">Crear</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+        <span class="text-xs mt-1">Crear</span>
       </button>
     </li>
+
+    <!-- Vender (🛒 → Icono SVG) -->
     <li>
       <button id="mobileVenderBtn" class="flex flex-col items-center text-gray-600 hover:text-blue-600 transition">
-        <span class="text-xl">🛒</span>
-        <span class="text-xs">Vender</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+        <span class="text-xs mt-1">Vender</span>
       </button>
     </li>
+
+    <!-- Chats (💬 → Icono SVG) -->
+    <li>
+      <button onclick="openSimpleMessagesModal()" class="flex flex-col items-center text-gray-600 hover:text-blue-600 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+        </svg>
+        <span class="text-xs mt-1">Chats</span>
+      </button>
+    </li>
+
+    <!-- Perfil (👤 → Icono SVG o imagen) -->
     <li>
       <button id="mobilePerfilBtn" class="relative flex flex-col items-center text-gray-600 hover:text-blue-600 transition">
         <!-- Imagen de perfil (oculta por defecto) -->
-        <img id="mobileProfilePic" src="" alt="Perfil"
-          class="hidden w-9 h-9 rounded-full border-2 border-blue-500 shadow-md" />
-        <!-- Ícono por defecto -->
-        <span id="mobileProfileIcon" class="text-xl">👤</span>
-        <span class="text-xs">Perfil</span>
+        <img id="mobileProfilePic" src="" alt="Perfil" class="hidden w-6 h-6 rounded-full border-2 border-blue-500 object-cover" />
+        <!-- Ícono SVG por defecto -->
+        <svg id="mobileProfileIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+        <span class="text-xs mt-1">Perfil</span>
       </button>
     </li>
+
   </ul>
 </nav>
 
@@ -269,34 +295,71 @@ document.getElementById("openEditProfileFromModal").addEventListener("click", fu
 
 
 
+
+
+
+
+
+
+
         
-    <!-- Main Content -->
-    <main class="flex-1 p-6 max-w-2xl mx-auto">
+
+
+
+
+<main class="flex-1 p-6 max-w-2xl mx-auto">
   <!-- Creador de publicaciones -->
-  <div class="bg-white p-5 rounded-xl shadow-md mb-6">
-    <textarea id="postInput" placeholder="¿Qué necesitas?"
+  <div class="bg-sky-50 p-5 rounded-xl shadow-lg border-2 border-blue-300 mb-6">
+    <textarea id="postInput" placeholder="¿Qué piensas, nakama? (´• ω •`)ﾉ"
       rows="3"
-      class="w-full p-3 border border-gray-300 rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
+      class="w-full p-3 border-2 border-blue-400 rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-sky-500 bg-white text-gray-800 placeholder-blue-400 font-sans"></textarea>
 
     <div class="flex items-center justify-between mb-3">
       <div>
-        <label for="postImageInput" class="cursor-pointer text-gray-600 hover:text-blue-600 transition">
-          📷 Foto/Video
+        <label for="postImageInput" class="cursor-pointer text-blue-600 hover:text-blue-800 transition flex items-center">
+          <!-- Ícono de cámara estilo anime -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15a2.25 2.25 0 002.25-2.25V9.574c0-1.067-.749-1.994-1.802-2.169a41.76 41.76 0 00-1.134-.175 2.31 2.31 0 01-1.641-1.055l-.986-1.647A2.25 2.25 0 0015.868 4.5H8.132a2.25 2.25 0 00-1.924 1.028l-.986 1.647z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
+          </svg>
+          <span class="font-medium">Agregar archivo</span>
         </label>
-        <input id="postImageInput" type="file" accept="image/*,video/*" class="hidden">
+        <input id="postImageInput" type="file" multiple accept="image/*,video/*,audio/*,.zip,.rar,.pdf,.doc,.docx" class="hidden">
       </div>
-      <span id="fileInfo" class="text-sm text-gray-500 truncate max-w-xs"></span>
+      <span id="fileInfo" class="text-sm text-blue-600 truncate max-w-xs font-medium"></span>
+    </div>
+
+    <!-- Contenedor de previsualización (solo imagen principal o texto si es otro tipo) -->
+    <div id="mediaPreviewContainer" class="mb-3 hidden">
+      <div class="relative rounded-lg overflow-hidden border-2 border-blue-400">
+        <img id="mediaPreview" src="#" alt="Previsualización" class="w-full hidden">
+        <ul id="fileList" class="list-disc list-inside text-blue-700 p-2 text-sm"></ul>
+
+        <!-- Overlay de carga con cara anime 3D -->
+        <div id="loadingOverlay" class="absolute inset-0 bg-blue-600 bg-opacity-80 flex flex-col items-center justify-center hidden">
+          <span class="text-4xl mb-2 animate-bounce">(＾• ω •＾)</span>
+          <span class="text-white font-bold">Subiendo... ٩(◕‿◕｡)۶</span>
+        </div>
+      </div>
     </div>
 
     <button id="publishBtn" disabled
-      class="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg transition">
-      Publicar
+      class="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg transition-all duration-300 shadow hover:shadow-md disabled:opacity-50 font-bold flex items-center justify-center">
+      <span class="mr-2">Publicar</span>
+      <span class="text-xl">(ᗒᗨᗕ)</span>
     </button>
   </div>
 
   <!-- Contenedor de publicaciones -->
-  <div id="postsContainer" class="space-y-4"></div>
+  <div id="postsContainer" class="space-y-6"></div>
 </main>
+
+
+
+
+
+
+
 
 
 
@@ -332,6 +395,8 @@ document.getElementById("openEditProfileFromModal").addEventListener("click", fu
     </div>
 
     
+
+
     <!-- MODAL PARA EDITAR PERFIL -->
 <div id="editProfileModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
   <div class="bg-white p-6 rounded-lg shadow-lg text-center w-96 relative">
@@ -359,57 +424,108 @@ document.getElementById("openEditProfileFromModal").addEventListener("click", fu
   </div>
 </div>
 
-   
 
-   <!-- MODAL DEL PERFIL -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- MODAL DEL PERFIL - VERSIÓN MEJORADA -->
 <div id="profileModal" class="modal hidden fixed inset-0 flex items-center justify-center z-50">
-    <!-- Fondo oscuro difuminado -->
-    <div id="modalOverlay" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md"></div>
+    <!-- Fondo oscuro con efecto glassmorphism mejorado -->
+    <div id="modalOverlay" class="modal-overlay fixed inset-0 bg-black/60 backdrop-blur-lg"></div>
 
-    <!-- Contenido del modal -->
-    <div id="modalContent" class="bg-white p-6 rounded-lg shadow-lg text-center w-96 relative transform scale-95 opacity-0 transition-all duration-300 ease-in-out">
-
-        <!-- Botón de cerrar -->
-        <button id="closeProfileModal" class="absolute top-2 right-2 text-gray-600 text-2xl hover:text-gray-800">
+    <!-- Contenido del modal - Diseño moderno -->
+    <div id="modalContent" class="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-2xl text-center w-full max-w-md relative transform scale-95 opacity-0 transition-all duration-300 ease-in-out border border-gray-100 dark:border-gray-700">
+        <!-- Botón de cerrar con mejor feedback -->
+        <button id="closeProfileModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-2xl transition-colors duration-200 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
             &times;
         </button>
 
-        <!-- Foto de perfil con opción de cambio -->
-        <label for="profilePicInput" class="cursor-pointer block">
-            <img id="profilePicModal" src="https://via.placeholder.com/80" class="w-24 h-24 rounded-full mx-auto mb-3 border-2 border-gray-300">
-        </label>
-        <input type="file" id="profilePicInput" accept="image/*" class="hidden">
-        <button id="saveProfilePicBtn" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition mt-2 hidden">
-            Guardar Foto
+        <!-- Foto de perfil con hover effect -->
+        <div class="relative group mx-auto w-28 h-28 mb-4">
+            <label for="profilePicInput" class="cursor-pointer block">
+                <img id="profilePicModal" src="https://via.placeholder.com/150" class="w-full h-full rounded-full object-cover border-4 border-white dark:border-gray-800 shadow-lg group-hover:opacity-80 transition-opacity">
+                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span class="bg-black/50 text-white text-xs font-medium px-2 py-1 rounded-full">Cambiar</span>
+                </div>
+            </label>
+            <input type="file" id="profilePicInput" accept="image/*" class="hidden">
+        </div>
+        
+        <button id="saveProfilePicBtn" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 rounded-full shadow-lg hover:shadow-xl transition-all mt-2 hidden text-sm font-medium">
+            Guardar Cambios
         </button>
 
-        <!-- Nombre y biografía -->
-        <h2 class="text-xl font-bold text-gray-900" id="modalProfileName">Owen</h2>
-        <p id="modalProfileUsername" class="text-gray-600">@charly</p>
-        <p id="modalProfileBio" class="text-gray-500 text-sm mb-4">Esta es la biografía del usuario.</p>
+        <!-- Información del usuario con mejor jerarquía visual -->
+        <div class="mb-4">
+            <h2 id="modalProfileName" class="text-2xl font-bold text-gray-900 dark:text-white">Owen</h2>
+            <p id="modalProfileUsername" class="text-indigo-600 dark:text-indigo-400 font-medium">@charly</p>
+            <p id="modalProfileBio" class="text-gray-600 dark:text-gray-300 text-sm mt-2 max-w-xs mx-auto">Esta es la biografía del usuario. Puede ser más larga y mostrar intereses, pasatiempos o lo que quiera compartir.</p>
+        </div>
 
-        <!-- Botón de editar perfil -->
-<button id="openEditProfileFromModal" class="hidden bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition">
-  Editar perfil
-</button>
-         
-         <button id="followBtn" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition hidden">
-             Seguir
-         </button>
+        <!-- Botones de acción con micro-interacciones -->
+        <div class="flex justify-center gap-3 mb-6">
+            <button id="openEditProfileFromModal" class="hidden bg-white dark:bg-gray-800 text-gray-800 dark:text-white px-5 py-2 rounded-full shadow-sm hover:shadow-md transition-all border border-gray-200 dark:border-gray-700 text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700">
+                Editar perfil
+            </button>
 
+            <button id="followBtn" class="hidden bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-5 py-2 rounded-full shadow-lg hover:shadow-xl hover:from-blue-600 hover:to-indigo-700 transition-all text-sm font-medium">
+                Seguir
+            </button>
+        </div>
 
+        <!-- Stats con diseño más atractivo -->
+        <div class="flex justify-around text-gray-700 dark:text-gray-300 text-sm mb-6">
+            <div class="flex flex-col items-center">
+                <span id="profilePostCount" class="font-bold text-lg text-gray-900 dark:text-white">0</span>
+                <span class="text-xs text-gray-500 dark:text-gray-400">Publicaciones</span>
+            </div>
+            <div class="flex flex-col items-center">
+                <span id="profileFollowingCount" class="font-bold text-lg text-gray-900 dark:text-white">0</span>
+                <span class="text-xs text-gray-500 dark:text-gray-400">Siguiendo</span>
+            </div>
+            <div class="flex flex-col items-center">
+                <span id="profileFollowersCount" class="font-bold text-lg text-gray-900 dark:text-white">0</span>
+                <span class="text-xs text-gray-500 dark:text-gray-400">Seguidores</span>
+            </div>
+        </div>
 
-        <!-- Información del usuario -->
-        <div class="flex justify-around text-gray-700 text-sm mt-3">
-            <span><b id="profilePostCount">0</b> Publicaciones</span>
-            <span><b id="profileFollowingCount">0</b> Siguiendo</span>
-            <span><b id="profileFollowersCount">0</b> Seguidores</span>
-         </div>
-         
-        <!-- Timeline -->
-        <h3 class="mt-4 font-bold text-gray-800">Timeline</h3>
-        <div class="bg-gray-100 p-2 rounded mt-2 shadow-sm">Primer Publicación</div>
-        <div class="bg-gray-100 p-2 rounded mt-2 shadow-sm">Segunda Publicación</div>
+        <!-- Timeline con mejor diseño -->
+        <div class="border-t border-gray-200 dark:border-gray-800 pt-4">
+            <h3 class="font-bold text-gray-800 dark:text-white mb-3 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+                Timeline
+            </h3>
+            <div class="space-y-2">
+                <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg shadow-sm hover:shadow transition-all cursor-pointer">
+                    <p class="text-sm font-medium text-gray-800 dark:text-white">Primer Publicación</p>
+                    <p class="text-xs text-gray-500 mt-1">Hace 2 días</p>
+                </div>
+                <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg shadow-sm hover:shadow transition-all cursor-pointer">
+                    <p class="text-sm font-medium text-gray-800 dark:text-white">Segunda Publicación</p>
+                    <p class="text-xs text-gray-500 mt-1">Hace 1 semana</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -530,10 +646,6 @@ document.getElementById("openEditProfileFromModal").addEventListener("click", fu
   </div>
 </div>
 
-<!-- Botón para abrir el modal -->
-<button onclick="openSimpleMessagesModal()" class="fixed bottom-6 right-6 bg-indigo-500 text-white px-4 py-2 rounded-full shadow-lg hover:bg-indigo-600 transition">
-  💬 Mensajes
-</button>
 
 
 
@@ -685,22 +797,23 @@ document.getElementById("openEditProfileFromModal").addEventListener("click", fu
     updateProfile
   } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-  import {
-    getFirestore,
-    doc,
-    setDoc,
-    getDoc,
-    getDocs,         // ✅ Contar documentos
-    addDoc,
-    deleteDoc,       // ✅ Eliminar seguimiento o post
-    serverTimestamp,
-    query,
-    where,           // ✅ Filtrar por UID o condiciones
-    orderBy,
-    onSnapshot,
-    collection,
-    updateDoc        // ✅ Actualizar documentos
-  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  getDocs,
+  addDoc,
+  deleteDoc,
+  serverTimestamp,
+  query,
+  where,
+  orderBy,
+  onSnapshot,
+  collection,
+  updateDoc,
+  increment // ✅ <- Agregado aquí
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
 
@@ -756,10 +869,15 @@ async function login() {
       alert("ℹ️ Usuario ya existía en Firestore");
     }
 
-    document.getElementById("loginModal")?.classList.add("hidden");
-    await loadUserProfile(user.uid);
-    closeModal();
+    // ✅ Cerrar completamente el modal
+    const loginModal = document.getElementById("loginModal");
+    if (loginModal) {
+      loginModal.classList.add("hidden");
+      loginModal.style.display = "none";
+    }
 
+    await loadUserProfile(user.uid);
+    closeModal(); // Opcional, depende de si usas otro modal o animación
   } catch (error) {
     alert("❌ Error en login: " + error.message);
     console.error("❌ Error en login:", error);
@@ -787,7 +905,13 @@ async function loginAsSeller() {
       await setDoc(userRef, { accountType: "seller" }, { merge: true });
     }
 
-    document.getElementById("loginModal")?.classList.add("hidden");
+    // ✅ Cerrar completamente el modal
+    const loginModal = document.getElementById("loginModal");
+    if (loginModal) {
+      loginModal.classList.add("hidden");
+      loginModal.style.display = "none";
+    }
+
     closeModal();
     await loadUserProfile(user.uid);
     await syncAccountTypeUI(user);
@@ -808,8 +932,9 @@ async function logout() {
   try {
     await auth.signOut();
     console.log("✅ Usuario cerró sesión");
+
     hideProfileOnLogout(); // Limpia interfaz
-    location.reload();
+    location.reload();     // Refresca para que se oculte todo lo necesario
   } catch (error) {
     console.error("❌ Error al cerrar sesión:", error);
   }
@@ -992,6 +1117,18 @@ function updateUI(user) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 // 🔐 AUTENTICACIÓN Y MANEJO DE SESIÓN
 
 let unsubscribePosts = null;
@@ -1001,13 +1138,11 @@ let currentAccountType = "usuario";
 onAuthStateChanged(auth, async (user) => {
   console.log("🔄 Detectando cambios en la sesión...", user);
 
-  // Elementos del DOM
   const loginBtn = document.getElementById("loginBtn");
   const profileContainer = document.getElementById("profileContainer");
   const profileContainerSidebar = document.getElementById("profileContainerSidebar");
   const publishBtn = document.getElementById("publishBtn");
-  
-  // Elementos móviles
+
   const mobileProfilePic = document.getElementById("mobileProfilePic");
   const mobileProfileIcon = document.getElementById("mobileProfileIcon");
   const mobilePerfilBtn = document.getElementById("mobilePerfilBtn");
@@ -1039,11 +1174,8 @@ onAuthStateChanged(auth, async (user) => {
       currentAccountType = userData.accountType || "usuario";
       mainPhoto = userData.modalPhotoURL || userData.photoURL || mainPhoto;
 
-      // Actualizar UI
       updateProfileUI(userData, mainPhoto);
       await syncAccountTypeUI(user);
-
-      // Configurar eventos de clic
       setupProfileClickHandlers(userData, mainPhoto);
 
       if (unsubscribePosts) unsubscribePosts();
@@ -1065,9 +1197,7 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
-// Funciones auxiliares
 function updateProfileUI(userData, mainPhoto) {
-  // Actualizar elementos de perfil
   const profileElements = [
     { id: "profilePicModal", prop: "src", value: mainPhoto },
     { id: "profileName", prop: "textContent", value: userData.name || "Usuario" },
@@ -1085,7 +1215,6 @@ function updateProfileUI(userData, mainPhoto) {
     }
   });
 
-  // Mostrar/ocultar elementos móviles
   const mobileProfilePic = document.getElementById("mobileProfilePic");
   const mobileProfileIcon = document.getElementById("mobileProfileIcon");
   if (mobileProfilePic && mobileProfileIcon) {
@@ -1093,21 +1222,23 @@ function updateProfileUI(userData, mainPhoto) {
     mobileProfileIcon.classList.add("hidden");
   }
 
-  // Mostrar contenedores de perfil
   const loginBtn = document.getElementById("loginBtn");
   const profileContainer = document.getElementById("profileContainer");
   const profileContainerSidebar = document.getElementById("profileContainerSidebar");
-  
+
   if (loginBtn) loginBtn.style.display = "none";
   if (profileContainer) profileContainer.style.display = "block";
   if (profileContainerSidebar) profileContainerSidebar.classList.remove("hidden");
 }
 
 function setupProfileClickHandlers(userData, mainPhoto) {
-  // Función para mostrar el modal apropiado
   const showProfileModal = () => {
-    document.getElementById("profileModal")?.classList.add("hidden");
-    document.getElementById("sellerProfileModal")?.classList.add("hidden");
+    const profileModal = document.getElementById("profileModal");
+    const sellerProfileModal = document.getElementById("sellerProfileModal");
+
+    // Oculta ambos antes de mostrar el adecuado
+    if (profileModal) profileModal.style.display = "none";
+    if (sellerProfileModal) sellerProfileModal.style.display = "none";
 
     if (userData.accountType === "vendedor") {
       const sellerModal = document.getElementById("sellerProfileModal");
@@ -1116,7 +1247,7 @@ function setupProfileClickHandlers(userData, mainPhoto) {
         document.getElementById("sellerName").textContent = userData.name || "Vendedor";
         document.getElementById("sellerUsername").textContent = "@" + (userData.username || "usuario");
         document.getElementById("sellerBio").textContent = userData.bio || "";
-        sellerModal.classList.remove("hidden");
+        sellerModal.style.display = "flex"; // aseguramos visibilidad
       }
     } else {
       const userModal = document.getElementById("profileModal");
@@ -1125,40 +1256,34 @@ function setupProfileClickHandlers(userData, mainPhoto) {
         document.getElementById("modalProfileUsername").textContent = "@" + (userData.username || "usuario");
         document.getElementById("modalProfileBio").textContent = userData.bio || "";
         document.getElementById("profilePicModal").src = mainPhoto;
-        userModal.classList.remove("hidden");
+        userModal.style.display = "flex";
         document.getElementById("modalContent")?.classList.remove("scale-95", "opacity-0");
       }
     }
   };
 
-  // Configurar eventos para desktop
   const profileContainerSidebar = document.getElementById("profileContainerSidebar");
   if (profileContainerSidebar) {
-    profileContainerSidebar.removeEventListener("click", showProfileModal); // Eliminar evento previo si existe
-    profileContainerSidebar.addEventListener("click", showProfileModal);
+    profileContainerSidebar.onclick = showProfileModal;
   }
 
-  // Configurar eventos para móvil
   const mobilePerfilBtn = document.getElementById("mobilePerfilBtn");
   if (mobilePerfilBtn) {
-    mobilePerfilBtn.removeEventListener("click", showProfileModal); // Eliminar evento previo si existe
-    mobilePerfilBtn.addEventListener("click", showProfileModal);
+    mobilePerfilBtn.onclick = showProfileModal;
   }
 }
 
 function handleLogoutUI() {
   console.log("🚪 No hay usuario, cerrando sesión visual...");
 
-  // Ocultar elementos de perfil
   const loginBtn = document.getElementById("loginBtn");
   const profileContainer = document.getElementById("profileContainer");
   const profileContainerSidebar = document.getElementById("profileContainerSidebar");
-  
+
   if (loginBtn) loginBtn.style.display = "block";
   if (profileContainer) profileContainer.style.display = "none";
   if (profileContainerSidebar) profileContainerSidebar.classList.add("hidden");
 
-  // Restablecer botón móvil
   const mobileProfilePic = document.getElementById("mobileProfilePic");
   const mobileProfileIcon = document.getElementById("mobileProfileIcon");
   if (mobileProfilePic && mobileProfileIcon) {
@@ -1166,11 +1291,25 @@ function handleLogoutUI() {
     mobileProfileIcon.classList.remove("hidden");
   }
 
+  const loginModal = document.getElementById("loginModal");
+
+  const openLoginModal = () => {
+    if (loginModal) loginModal.classList.remove("hidden");
+  };
+
+  const mobilePerfilBtn = document.getElementById("mobilePerfilBtn");
+  if (mobilePerfilBtn) {
+    mobilePerfilBtn.removeEventListener("click", openLoginModal);
+    mobilePerfilBtn.addEventListener("click", openLoginModal);
+  }
+
+  if (profileContainerSidebar) {
+    profileContainerSidebar.removeEventListener("click", openLoginModal);
+    profileContainerSidebar.addEventListener("click", openLoginModal);
+  }
+
   hideProfileOnLogout();
 }
-
-
-
 
 
 
@@ -1234,28 +1373,6 @@ enablePersistence();
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ========== 👥 SEGUIDORES ==========
 async function loadFollowingInMessages() {
   const currentUser = auth.currentUser;
@@ -1304,6 +1421,7 @@ async function loadFollowingInMessages() {
   }
 }
 
+
 // ✅ Cargar contadores del perfil vendedor
 async function loadSellerCounts(uid) {
   try {
@@ -1349,6 +1467,35 @@ async function loadProfileCounts(uid) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ========== 🔧 FUNCIONES GLOBALES ==========
 function openModal() {
   const user = auth.currentUser;
@@ -1360,6 +1507,9 @@ function openModal() {
 
     const userData = userSnap.data();
     const accountType = userData.accountType || "google";
+
+    // Al abrir el modal, ocultamos el sidebar de PC y mostramos el móvil
+    toggleSidebar(true);
 
     if (accountType === "seller") {
       const sellerModal = document.getElementById("sellerProfileModal");
@@ -1412,9 +1562,31 @@ function closeModal() {
   setTimeout(() => {
     profileModal.classList.add("hidden");
     profileModal.style.display = "none";
-    modalOverlay.classList.add("hidden");
+    modalOverlay.classList.add("hidden"); // Ocultamos el overlay al cerrar el modal
     document.body.style.overflow = "auto";
+
+    // Al cerrar el modal, mostramos nuevamente el sidebar de PC y ocultamos el móvil
+    toggleSidebar(false);
   }, 300);
+}
+
+// Función para alternar visibilidad del sidebar de PC y móvil
+function toggleSidebar(open) {
+  const pcSidebar = document.getElementById("pcSidebar");
+  const mobileSidebar = document.getElementById("mobileSidebar");
+  const modalOverlay = document.getElementById("modalOverlay");
+
+  if (open) {
+    // Si queremos abrir el modal, ocultamos el sidebar de PC y mostramos el móvil
+    pcSidebar?.classList.add("hidden");
+    mobileSidebar?.classList.remove("hidden");
+    modalOverlay?.classList.add("hidden"); // Aseguramos que el overlay también se oculte
+  } else {
+    // Si cerramos el modal, volvemos a mostrar el sidebar de PC y ocultamos el móvil
+    pcSidebar?.classList.remove("hidden");
+    mobileSidebar?.classList.add("hidden");
+    modalOverlay?.classList.remove("hidden"); // Si es necesario, mostramos el overlay de nuevo
+  }
 }
 
 // ✅ Listeners para el modal (PC y móvil)
@@ -1463,6 +1635,18 @@ document.getElementById("sellerLoginBtn")?.addEventListener("click", () => {
 document.getElementById("googleLoginBtn")?.addEventListener("click", () => {
   login(); // también tienes esta función
 });
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1581,10 +1765,567 @@ document.addEventListener("click", async (e) => {
 
 
 
+
+// ========== 📝 PUBLICACIONES ==========
+
+// 👉 Abrir modal de perfil desde publicación (siempre muestra perfil normal)
+window.openModalFromPost = function(uid) {
+  getDoc(doc(db, "usuarios", uid)).then(userSnap => {
+    if (!userSnap.exists()) return;
+
+    const userData = userSnap.data();
+    const currentUser = auth.currentUser;
+
+    document.getElementById("profileModal")?.classList.add("hidden");
+    document.getElementById("sellerProfileModal")?.classList.add("hidden");
+
+    document.getElementById("modalProfileName").textContent = userData.name || "Usuario";
+    document.getElementById("modalProfileUsername").textContent = "@" + (userData.username || "usuario");
+    document.getElementById("modalProfileBio").textContent = userData.bio || "Sin biografía";
+    document.getElementById("profilePicModal").src = userData.modalPhotoURL || userData.photoURL || "https://via.placeholder.com/80";
+
+    const editBtn = document.getElementById("openEditProfileFromModal");
+    const followBtn = document.getElementById("followBtn");
+
+    if (currentUser && currentUser.uid === uid) {
+      editBtn.classList.remove("hidden");
+      followBtn.classList.add("hidden");
+    } else {
+      editBtn.classList.add("hidden");
+      followBtn.classList.remove("hidden");
+      followBtn.textContent = "Seguir";
+    }
+
+    const modal = document.getElementById("profileModal");
+    const modalContent = document.getElementById("modalContent");
+    const modalOverlay = document.getElementById("modalOverlay");
+
+    modal.classList.remove("hidden");
+    modal.style.display = "flex";
+    if (modalOverlay) {
+      modalOverlay.classList.remove("hidden");
+      modalOverlay.style.display = "block";
+    }
+
+    setTimeout(() => {
+      modalContent.classList.remove("scale-95", "opacity-0");
+      modalContent.classList.add("scale-100", "opacity-100");
+    }, 10);
+
+    loadUserProfile(uid);
+  }).catch(error => {
+    console.error("❌ Error al abrir modal desde publicación:", error);
+    alert("❌ No se pudo abrir el perfil.");
+  });
+};
+
+// 👉 Detectar clic en nombre o foto para abrir modal
+
+
+// Clic en nombre (username)
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("username-link")) {
+    e.preventDefault();      // Prevenir comportamiento del navegador
+    e.stopPropagation();     // Evitar propagación innecesaria
+    const uid = e.target.dataset.uid;
+    if (uid) openModalFromPost(uid);
+  }
+});
+
+// Clic en imagen de perfil para vista previa
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("profile-pic-clickable")) {
+    const modal = document.getElementById("profilePicPreviewModal");
+    const img = document.getElementById("previewProfilePic");
+    img.src = e.target.dataset.img;
+    modal.classList.remove("hidden");
+  }
+});
+
+// Cerrar vista previa de imagen
+document.getElementById("profilePicPreviewModal")?.addEventListener("click", (e) => {
+  if (e.target.id === "profilePicPreviewModal") {
+    e.currentTarget.classList.add("hidden");
+  }
+});
+
+
+// 👉 Publicar un post
+
+document.getElementById("publishBtn")?.addEventListener("click", async (e) => {
+  const btn = e.currentTarget;
+  btn.disabled = true;
+  btn.textContent = "Publicando...";
+
+  const text = document.getElementById("postInput").value.trim();
+  const imageInput = document.getElementById("postImageInput");
+  const file = imageInput.files[0];
+
+  if (!text && !file) {
+    alert("⚠️ Escribe algo o sube una imagen, video o archivo.");
+    btn.disabled = false;
+    btn.textContent = "Publicar";
+    return;
+  }
+
+  const user = auth.currentUser;
+  if (!user) {
+    alert("⚠️ Debes estar logueado.");
+    btn.disabled = false;
+    btn.textContent = "Publicar";
+    return;
+  }
+
+  if (!userDataLoaded) {
+    alert("⚠️ Espera a que se cargue tu perfil correctamente antes de publicar.");
+    btn.disabled = false;
+    btn.textContent = "Publicar";
+    return;
+  }
+
+  let mediaURL = "";
+  let isVideo = false;
+  let fileType = "";
+  let originalFileName = "";
+
+  if (file) {
+    try {
+      fileType = file.type;
+      originalFileName = file.name;
+
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "Tweetsocial");
+
+      let uploadURL = "";
+
+      if (fileType.startsWith("video/")) {
+        isVideo = true;
+        uploadURL = "https://api.cloudinary.com/v1_1/dz70korgo/video/upload";
+      } else if (fileType.startsWith("image/")) {
+        uploadURL = "https://api.cloudinary.com/v1_1/dz70korgo/image/upload";
+      } else {
+        uploadURL = "https://api.cloudinary.com/v1_1/dz70korgo/raw/upload";
+      }
+
+      const response = await fetch(uploadURL, {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+      if (!data.secure_url) throw new Error("No se pudo subir a Cloudinary");
+
+      mediaURL = data.secure_url;
+    } catch (error) {
+      console.error("❌ Error al subir archivo:", error);
+      alert("❌ Ocurrió un error al subir el archivo.");
+      btn.disabled = false;
+      btn.textContent = "Publicar";
+      return;
+    }
+  }
+
+  let profileData = {};
+  try {
+    const userSnap = await getDoc(doc(db, "usuarios", user.uid));
+    if (userSnap.exists()) {
+      const data = userSnap.data();
+      profileData = {
+        accountType: data.accountType || "",
+        bio: data.bio || "",
+        modalPhotoURL: data.modalPhotoURL || "",
+        name: data.name || "",
+        username: data.username || "",
+        photoURL: data.photoURL || "",
+      };
+    }
+  } catch (e) {
+    console.warn("⚠️ No se pudo obtener perfil del usuario:", e);
+  }
+
+  try {
+    await addDoc(collection(db, "posts"), {
+      uid: user.uid,
+      text,
+      mediaURL,
+      isVideo,
+      fileType,
+      fileName: originalFileName,
+      timestamp: serverTimestamp(),
+      ...profileData,
+    });
+
+    document.getElementById("postInput").value = "";
+    imageInput.value = "";
+    alert("✅ Publicación realizada con éxito.");
+  } catch (err) {
+    console.error("❌ Error al guardar la publicación:", err);
+    alert("❌ Error al guardar la publicación en Firestore.");
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Publicar";
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ========== 📝 PUBLICACIONES ==========
+function renderPostHTML(docData, userData = {}, postId = "") {
+  const uid = docData?.uid || userData?.uid || "";
+  const timestamp = new Date(docData.timestamp?.toDate?.() || Date.now()).toLocaleString();
+
+  const safeUser = {
+    username: docData.username || userData.username || "usuario",
+    name: docData.name || userData.name || "Usuario",
+    photoURL: docData.modalPhotoURL || docData.photoURL || userData.modalPhotoURL || userData.photoURL || "https://via.placeholder.com/40",
+    accountType: docData.accountType || userData.accountType || "usuario"
+  };
+
+  const userHeader = `
+    <div class="flex items-center mb-3">
+      <img src="${safeUser.photoURL}" alt="Foto de ${safeUser.name}"
+        class="w-10 h-10 rounded-full object-cover border-2 cursor-pointer profile-pic-clickable"
+        data-uid="${uid}" data-account-type="${safeUser.accountType}"
+        onerror="this.src='https://via.placeholder.com/40'" />
+      <div class="ml-3">
+        <span class="font-medium text-blue-600 cursor-pointer username-link hover:text-blue-800"
+          data-uid="${uid}" data-account-type="${safeUser.accountType}">@${safeUser.username}</span>
+        <div class="text-xs text-gray-500">${timestamp}</div>
+      </div>
+    </div>
+  `;
+
+  const mediaBlock = (() => {
+    const src = docData.imagen || docData.mediaURL;
+    const fileType = src?.split('.').pop()?.toLowerCase();
+    if (!src) return "";
+
+    if (docData.isVideo || fileType === "mp4") {
+      return `
+        <div class="relative bg-white flex justify-center items-center border rounded-lg overflow-hidden">
+          <video class="media-clickable w-full max-h-[600px] object-contain cursor-pointer" src="${src}" controls></video>
+        </div>`;
+    }
+
+    if (["jpg", "jpeg", "png", "gif", "webp"].includes(fileType)) {
+      return `
+        <div class="relative flex justify-center items-center bg-white border rounded-lg overflow-hidden">
+          <img src="${src}" alt="Contenido"
+            class="media-clickable w-full max-h-[600px] object-contain cursor-pointer"
+            onerror="this.style.display='none'" />
+        </div>`;
+    }
+
+    if (["mp3", "wav", "ogg"].includes(fileType)) {
+      return `
+        <div class="my-3 bg-white p-3 border rounded-lg">
+          <audio controls class="w-full">
+            <source src="${src}" type="audio/${fileType}" />
+            Tu navegador no soporta audio embebido.
+          </audio>
+        </div>`;
+    }
+
+    if (fileType === "pdf") {
+      return `
+        <div class="my-3 bg-white border rounded-lg overflow-hidden">
+          <embed src="${src}" type="application/pdf" class="w-full h-[500px]" />
+          <p class="text-sm p-3 border-t">
+            <a href="${src}" target="_blank" class="underline text-blue-600 hover:text-blue-800">Ver PDF en nueva pestaña</a>
+          </p>
+        </div>`;
+    }
+
+    return `
+      <div class="my-3 p-3 border rounded-lg bg-white flex items-center space-x-3">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 4v16m8-8H4" />
+        </svg>
+        <a href="${src}" download target="_blank" class="text-blue-600 underline hover:text-blue-800">
+          Descargar archivo (${fileType.toUpperCase()})
+        </a>
+      </div>`;
+  })();
+
+  const commentsBlock = `
+    <div class="comments-section hidden mt-4 pt-3 border-t border-gray-200">
+      <div class="comments-list space-y-3 mb-3"></div>
+      <div class="flex">
+        <input type="text" class="comment-input flex-grow border p-3 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-200" placeholder="Escribe un comentario..." />
+        <button class="comment-submit px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-r-lg transition-colors" data-post-id="${postId}">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+            viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  `;
+
+  const interactionButtons = (postId) => `
+    <div class="flex space-x-3 mt-3">
+      <button class="toggle-comments-btn bg-white hover:bg-gray-50 px-3 py-2 rounded-full border transition-colors flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M17 8h2a2 2 0 012 2v9a2 2 0 01-2 2h-2M7 8H5a2 2 0 00-2 2v9a2 2 0 002 2h2m0-14V4a2 2 0 012-2h6a2" />
+        </svg>
+        <span class="ml-1 text-sm">Comentarios</span>
+      </button>
+
+      <button class="like-btn bg-white hover:bg-gray-50 px-3 py-2 rounded-full border transition-colors flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M5 15l7-7 7 7" />
+        </svg>
+        <span class="ml-1 text-sm">Me gusta</span>
+      </button>
+
+      <button class="share-btn bg-white hover:bg-gray-50 px-3 py-2 rounded-full border transition-colors flex items-center" onclick="sharePost('${postId}')">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+        </svg>
+        <span class="ml-1 text-sm">Compartir</span>
+      </button>
+    </div>
+  `;
+
+  if (docData.tipo === "venta") {
+    return `
+      <div class="post bg-white p-5 rounded-lg shadow-md mt-4 border border-gray-200" data-post-id="${postId}">
+        ${userHeader}
+        <h3 class="text-xl font-bold text-gray-800 mb-2">${docData.titulo || "Producto sin título"}</h3>
+        <p class="text-gray-700 mb-3 leading-relaxed">${docData.descripcion || ""}</p>
+        ${mediaBlock || `<div class="bg-blue-100 p-4 rounded-lg mb-3 text-center text-blue-800 font-bold">💰 Precio: ${docData.precio || 0} USD</div>`}
+        <div class="flex justify-between items-center mt-3">
+          <div class="flex space-x-2">
+            ${interactionButtons(postId)}
+          </div>
+          <button class="comprar-btn bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-full shadow-md transition-all flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17" />
+            </svg>
+            Comprar
+          </button>
+        </div>
+        ${commentsBlock}
+      </div>
+    `;
+  }
+
+  return `
+    <div class="post bg-white p-5 rounded-lg shadow-md mt-4 border border-gray-200 hover:shadow-lg transition-shadow" data-post-id="${postId}">
+      ${userHeader}
+      <p class="text-gray-700 mb-3 leading-relaxed">${docData.text || ""}</p>
+      ${mediaBlock}
+      ${interactionButtons(postId)}
+      ${commentsBlock}
+    </div>
+  `;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ========== 👥 SEGUIDORES ==========
+
+document.addEventListener("click", async (e) => {
+  if (!e.target.classList.contains("username-link")) return;
+
+  const uid = e.target.dataset.uid;
+  if (!uid) {
+    alert("❌ No se pudo identificar el UID del usuario.");
+    return;
+  }
+
+  console.log("🔍 Clic en username, buscando datos para UID:", uid);
+
+  try {
+    const userRef = doc(db, "usuarios", uid);
+    const userSnap = await getDoc(userRef);
+
+    if (!userSnap.exists()) {
+      alert("❌ Usuario no encontrado en Firestore.");
+      return;
+    }
+
+    const userData = userSnap.data();
+    console.log("✅ Datos del usuario:", userData);
+
+    document.getElementById("profileModal")?.classList.add("hidden");
+    document.getElementById("sellerProfileModal")?.classList.add("hidden");
+
+    document.getElementById("profilePicModal").src = userData.modalPhotoURL || userData.photoURL || "https://via.placeholder.com/80";
+    document.getElementById("modalProfileName").textContent = userData.name || "Usuario";
+    document.getElementById("modalProfileUsername").textContent = "@" + (userData.username || "usuario");
+    document.getElementById("modalProfileBio").textContent = userData.bio || "";
+
+    const editBtn = document.getElementById("openEditProfileFromModal");
+    const followBtn = document.getElementById("followBtn");
+    const currentUser = auth.currentUser;
+    const isOwnProfile = currentUser && currentUser.uid === uid;
+
+    if (isOwnProfile) {
+      editBtn?.classList.remove("hidden");
+      followBtn?.classList.add("hidden");
+    } else {
+      editBtn?.classList.add("hidden");
+      followBtn?.classList.remove("hidden");
+
+      followBtn.dataset.uid = uid;
+
+      const followRef = doc(db, "usuarios", uid, "seguidores", currentUser.uid);
+      const followSnap = await getDoc(followRef);
+
+      if (followSnap.exists()) {
+        followBtn.textContent = "Siguiendo";
+        followBtn.classList.remove("bg-blue-500");
+        followBtn.classList.add("bg-green-500");
+      } else {
+        followBtn.textContent = "Seguir";
+        followBtn.classList.remove("bg-green-500");
+        followBtn.classList.add("bg-blue-500");
+      }
+    }
+
+    const modal = document.getElementById("profileModal");
+    const content = document.getElementById("modalContent");
+
+    modal.classList.remove("hidden");
+    modal.style.display = "flex";
+
+    setTimeout(() => {
+      content.classList.remove("scale-95", "opacity-0");
+      content.classList.add("scale-100", "opacity-100");
+    }, 10);
+
+  } catch (err) {
+    console.error("❌ Error al obtener perfil:", err);
+    alert("❌ No se pudo abrir el perfil.\n\n" + err.message);
+  }
+});
+
+document.getElementById("followBtn")?.addEventListener("click", async function () {
+  const followBtn = this;
+  const viewedUID = followBtn.dataset.uid;
+  const currentUser = auth.currentUser;
+
+  if (!viewedUID || !currentUser) {
+    alert("❌ No se pudo procesar el seguimiento.");
+    return;
+  }
+
+  const followerRef = doc(db, "usuarios", viewedUID, "seguidores", currentUser.uid);
+  const followingRef = doc(db, "usuarios", currentUser.uid, "seguidos", viewedUID);
+
+  try {
+    const docSnap = await getDoc(followerRef);
+
+    if (docSnap.exists()) {
+      await deleteDoc(followerRef);
+      await deleteDoc(followingRef);
+
+      followBtn.textContent = "Seguir";
+      followBtn.classList.remove("bg-green-500");
+      followBtn.classList.add("bg-blue-500");
+    } else {
+      await setDoc(followerRef, {
+        seguidorUID: currentUser.uid,
+        followedAt: Date.now()
+      });
+      await setDoc(followingRef, {
+        seguidoUID: viewedUID,
+        followedAt: Date.now()
+      });
+
+      followBtn.textContent = "Siguiendo";
+      followBtn.classList.remove("bg-blue-500");
+      followBtn.classList.add("bg-green-500");
+    }
+
+    await loadProfileCounts(viewedUID);
+
+  } catch (error) {
+    console.error("❌ Error al seguir/dejar de seguir:", error);
+    alert("❌ Hubo un error al actualizar el seguimiento.\n\n" + error.message);
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const profileModal = document.getElementById("profilePicPreviewModal");
+  const profileImgPreview = document.getElementById("previewProfilePic");
+
+  document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("profile-pic-clickable")) {
+      const src = e.target.getAttribute("src");
+      profileImgPreview.src = src;
+      profileModal.classList.remove("hidden");
+    }
+  });
+
+  profileModal.addEventListener("click", (e) => {
+    if (e.target === profileModal) {
+      profileModal.classList.add("hidden");
+      profileImgPreview.src = "";
+    }
+  });
+});
+
+
+
+
+
+
+
+
+
 // ========== 🧑 PERFIL - EDICIÓN ==========
 
 // 👉 Botón 'Editar perfil' desde el modal
-
 document.getElementById("openEditProfileFromModal")?.addEventListener("click", () => {
   closeModal();
   openEditProfileModal();
@@ -1609,7 +2350,6 @@ function openEditProfileModal() {
   getDoc(userRef).then((snap) => {
     if (!snap.exists()) return;
     const data = snap.data();
-
     document.getElementById("editProfilePic").src = data.modalPhotoURL || user.photoURL || "https://via.placeholder.com/80";
     document.getElementById("editProfileName").value = data.name || user.displayName || "";
     document.getElementById("editProfileUsername").value = (data.username || "").replace(/^@/, "");
@@ -1815,549 +2555,6 @@ document.getElementById("editProfileModal")?.addEventListener("click", (e) => {
     }, 300);
   }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function renderPostHTML(docData, userData = {}, postId = "") {
-  const safeUser = {
-    username: docData.username || userData.username || "usuario",
-    name: docData.name || userData.name || "Usuario",
-    photoURL: docData.modalPhotoURL || docData.photoURL || userData.modalPhotoURL || userData.photoURL || "https://via.placeholder.com/40",
-    accountType: docData.accountType || userData.accountType || "usuario"
-  };
-
-  const uid = docData?.uid || userData?.uid || "";
-
-  // 📦 Post tipo "venta" - Diseño mejorado
-  if (docData.tipo === "venta") {
-    return `
-    <div class="post bg-gradient-to-br from-yellow-50 to-yellow-100 p-5 rounded-lg shadow-md mt-4 border border-yellow-200 hover:shadow-lg transition-shadow duration-300" data-post-id="${postId}">
-      <div class="flex items-center mb-3">
-        <img src="${safeUser.photoURL}" class="w-10 h-10 rounded-full cursor-pointer profile-pic-clickable object-cover border-2 border-yellow-300" data-uid="${uid}" data-account-type="${safeUser.accountType}" />
-        <div class="ml-3">
-          <span class="text-blue-600 font-medium cursor-pointer username-link hover:text-blue-800 transition-colors" data-uid="${uid}" data-account-type="${safeUser.accountType}">@${safeUser.username}</span>
-          <div class="text-xs text-gray-500">${new Date(docData.timestamp?.toDate() || Date.now()).toLocaleString()}</div>
-        </div>
-      </div>
-      
-      <h3 class="text-xl font-bold text-gray-800 mb-2">${docData.titulo || "Producto sin título"}</h3>
-      <p class="text-gray-700 mb-3 leading-relaxed">${docData.descripcion || ""}</p>
-      
-      ${docData.imagen
-        ? docData.isVideo
-          ? `<div class="relative rounded-lg overflow-hidden mb-3">
-               <video class="media-clickable w-full h-64 object-cover rounded-lg cursor-pointer transform hover:scale-[1.02] transition-transform" src="${docData.imagen}" controls></video>
-               <div class="absolute bottom-0 left-0 bg-black bg-opacity-50 text-white p-2 w-full">
-                 <span class="text-sm">💰 <span class="font-bold text-lg">${docData.precio || 0}</span> USD</span>
-               </div>
-             </div>`
-          : `<div class="relative rounded-lg overflow-hidden mb-3">
-               <img src="${docData.imagen}" class="media-clickable w-full h-64 object-cover rounded-lg cursor-pointer transform hover:scale-[1.02] transition-transform" />
-               <div class="absolute bottom-0 left-0 bg-black bg-opacity-50 text-white p-2 w-full">
-                 <span class="text-sm">💰 <span class="font-bold text-lg">${docData.precio || 0}</span> USD</span>
-               </div>
-             </div>`
-        : `<div class="bg-yellow-200 p-4 rounded-lg mb-3 text-center">
-             <span class="text-yellow-800">💰 Precio: <span class="font-bold">${docData.precio || 0}</span> USD</span>
-           </div>`
-      }
-
-      <div class="flex justify-between items-center mt-3">
-        <div class="flex space-x-3">
-          <button class="toggle-comments-btn bg-white hover:bg-gray-100 px-3 py-2 rounded-full cursor-pointer shadow-sm transition-colors flex items-center">
-            <span class="mr-1">💬</span> <span class="text-sm">Comentarios</span>
-          </button>
-          <button class="like-btn hover:text-red-500 px-3 py-2 rounded-full transition-colors flex items-center">
-            <span class="mr-1">❤️</span> <span class="text-sm">Me gusta</span>
-          </button>
-        </div>
-        <button class="comprar-btn bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-5 py-2 rounded-full shadow-md transition-all transform hover:scale-105 flex items-center" data-post-id="${postId}" data-precio="${docData.precio}" data-titulo="${docData.titulo}">
-          <span class="mr-2">🛒</span> Comprar
-        </button>
-      </div>
-
-      <div class="comments-section hidden mt-4 pt-3 border-t border-yellow-200">
-        <div class="comments-list space-y-3 mb-3"></div>
-        <div class="flex">
-          <input type="text" class="comment-input flex-grow border border-yellow-300 p-3 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="Escribe un comentario...">
-          <button class="comment-submit bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-3 rounded-r-lg transition-colors" data-post-id="${postId}">Enviar</button>
-        </div>
-      </div>
-    </div>
-    `;
-  }
-
-  // ✍️ Post normal - Diseño mejorado
-  return `
-    <div class="post bg-white p-5 rounded-lg shadow-md mt-4 hover:shadow-lg transition-shadow duration-300" data-post-id="${postId}">
-      <div class="flex items-center mb-3">
-        <img src="${safeUser.photoURL}"
-             class="w-10 h-10 rounded-full cursor-pointer profile-pic-clickable object-cover border-2 border-blue-200"
-             data-uid="${uid}"
-             data-account-type="${safeUser.accountType}"
-             alt="Foto de ${safeUser.name}"
-             onerror="this.src='https://via.placeholder.com/40'" />
-        <div class="ml-3">
-          <span class="text-blue-600 font-medium cursor-pointer username-link hover:text-blue-800 transition-colors"
-                data-uid="${uid}"
-                data-account-type="${safeUser.accountType}">
-            @${safeUser.username}
-          </span>
-          <div class="text-xs text-gray-500">${new Date(docData.timestamp?.toDate() || Date.now()).toLocaleString()}</div>
-        </div>
-      </div>
-      
-      <p class="text-gray-700 mb-3 leading-relaxed">${docData.text || ""}</p>
-      
-      ${
-        docData.mediaURL
-          ? docData.isVideo
-            ? `<div class="relative rounded-lg overflow-hidden mb-3">
-                 <video class="media-clickable w-full h-64 object-cover rounded-lg cursor-pointer transform hover:scale-[1.02] transition-transform" src="${docData.mediaURL}" controls></video>
-               </div>`
-            : `<div class="relative rounded-lg overflow-hidden mb-3">
-                 <img src="${docData.mediaURL}"
-                      class="media-clickable w-full h-64 object-cover rounded-lg cursor-pointer transform hover:scale-[1.02] transition-transform"
-                      alt="Contenido multimedia"
-                      onerror="this.style.display='none'" />
-               </div>`
-          : ""
-      }
-      
-      <div class="flex space-x-2 mt-3">
-        <button class="toggle-comments-btn bg-white hover:bg-gray-100 px-3 py-2 rounded-full cursor-pointer shadow-sm transition-colors flex items-center">
-          <span class="mr-1">💬</span> <span class="text-sm">Comentarios</span>
-        </button>
-        <button class="like-btn hover:text-red-500 px-3 py-2 rounded-full transition-colors flex items-center">
-          <span class="mr-1">❤️</span> <span class="text-sm">Me gusta</span>
-        </button>
-        <button class="share-btn hover:text-blue-500 px-3 py-2 rounded-full transition-colors flex items-center">
-          <span class="mr-1">🔗</span> <span class="text-sm">Compartir</span>
-        </button>
-      </div>
-      
-      <div class="comments-section hidden mt-4 pt-3 border-t border-gray-200">
-        <div class="comments-list space-y-3 mb-3"></div>
-        <div class="flex">
-          <input type="text" class="comment-input flex-grow border border-gray-300 p-3 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Escribe un comentario..." />
-          <button class="comment-submit bg-blue-500 hover:bg-blue-600 text-white px-4 py-3 rounded-r-lg transition-colors" data-post-id="${postId}">Enviar</button>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ========== 📝 PUBLICACIONES ==========
-
-// 👉 Abrir modal de perfil desde publicación (siempre muestra perfil normal)
-window.openModalFromPost = function(uid) {
-  getDoc(doc(db, "usuarios", uid)).then(userSnap => {
-    if (!userSnap.exists()) return;
-
-    const userData = userSnap.data();
-    const currentUser = auth.currentUser;
-
-    document.getElementById("profileModal")?.classList.add("hidden");
-    document.getElementById("sellerProfileModal")?.classList.add("hidden");
-
-    document.getElementById("modalProfileName").textContent = userData.name || "Usuario";
-    document.getElementById("modalProfileUsername").textContent = "@" + (userData.username || "usuario");
-    document.getElementById("modalProfileBio").textContent = userData.bio || "Sin biografía";
-    document.getElementById("profilePicModal").src = userData.modalPhotoURL || userData.photoURL || "https://via.placeholder.com/80";
-
-    const editBtn = document.getElementById("openEditProfileFromModal");
-    const followBtn = document.getElementById("followBtn");
-
-    if (currentUser && currentUser.uid === uid) {
-      editBtn.classList.remove("hidden");
-      followBtn.classList.add("hidden");
-    } else {
-      editBtn.classList.add("hidden");
-      followBtn.classList.remove("hidden");
-      followBtn.textContent = "Seguir";
-    }
-
-    const modal = document.getElementById("profileModal");
-    const modalContent = document.getElementById("modalContent");
-    const modalOverlay = document.getElementById("modalOverlay");
-
-    modal.classList.remove("hidden");
-    modal.style.display = "flex";
-    if (modalOverlay) {
-      modalOverlay.classList.remove("hidden");
-      modalOverlay.style.display = "block";
-    }
-
-    setTimeout(() => {
-      modalContent.classList.remove("scale-95", "opacity-0");
-      modalContent.classList.add("scale-100", "opacity-100");
-    }, 10);
-
-    loadUserProfile(uid);
-  }).catch(error => {
-    console.error("❌ Error al abrir modal desde publicación:", error);
-    alert("❌ No se pudo abrir el perfil.");
-  });
-};
-
-// 👉 Detectar clic en nombre o foto para abrir modal
-
-// Clic en nombre (username)
-document.addEventListener("click", (e) => {
-  if (e.target.classList.contains("username-link")) {
-    const uid = e.target.dataset.uid;
-    if (uid) openModalFromPost(uid);
-  }
-});
-
-// Clic en imagen de perfil para vista previa
-document.addEventListener("click", (e) => {
-  if (e.target.classList.contains("profile-pic-clickable")) {
-    const modal = document.getElementById("profilePicPreviewModal");
-    const img = document.getElementById("previewProfilePic");
-    img.src = e.target.dataset.img;
-    modal.classList.remove("hidden");
-  }
-});
-
-// Cerrar vista previa de imagen
-document.getElementById("profilePicPreviewModal")?.addEventListener("click", (e) => {
-  if (e.target.id === "profilePicPreviewModal") {
-    e.currentTarget.classList.add("hidden");
-  }
-});
-
-// 👉 Publicar un post
-
-document.getElementById("publishBtn")?.addEventListener("click", async (e) => {
-  const btn = e.currentTarget;
-  btn.disabled = true;
-  btn.textContent = "Publicando...";
-
-  const text = document.getElementById("postInput").value.trim();
-  const imageInput = document.getElementById("postImageInput");
-  const file = imageInput.files[0];
-
-  if (!text && !file) {
-    alert("⚠️ Escribe algo o sube una imagen o video.");
-    btn.disabled = false;
-    btn.textContent = "Publicar";
-    return;
-  }
-
-  const user = auth.currentUser;
-  if (!user) {
-    alert("⚠️ Debes estar logueado.");
-    btn.disabled = false;
-    btn.textContent = "Publicar";
-    return;
-  }
-
-  if (!userDataLoaded) {
-    alert("⚠️ Espera a que se cargue tu perfil correctamente antes de publicar.");
-    btn.disabled = false;
-    btn.textContent = "Publicar";
-    return;
-  }
-
-  let mediaURL = "";
-  let isVideo = false;
-
-  if (file) {
-    try {
-      const fileType = file.type;
-      isVideo = fileType.startsWith("video/");
-
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", "Tweetsocial");
-
-      const uploadURL = isVideo
-        ? "https://api.cloudinary.com/v1_1/dz70korgo/video/upload"
-        : "https://api.cloudinary.com/v1_1/dz70korgo/image/upload";
-
-      const response = await fetch(uploadURL, { method: "POST", body: formData });
-      const data = await response.json();
-
-      if (!data.secure_url) throw new Error("No se pudo subir a Cloudinary");
-
-      mediaURL = data.secure_url;
-    } catch (error) {
-      console.error("❌ Error al subir archivo:", error);
-      alert("❌ Ocurrió un error al subir el archivo.");
-      btn.disabled = false;
-      btn.textContent = "Publicar";
-      return;
-    }
-  }
-
-  let profileData = {};
-  try {
-    const userSnap = await getDoc(doc(db, "usuarios", user.uid));
-    if (userSnap.exists()) {
-      const data = userSnap.data();
-      profileData = {
-        accountType: data.accountType || "",
-        bio: data.bio || "",
-        modalPhotoURL: data.modalPhotoURL || "",
-        name: data.name || "",
-        username: data.username || "",
-        photoURL: data.photoURL || ""
-      };
-    }
-  } catch (e) {
-    console.warn("⚠️ No se pudo obtener perfil del usuario:", e);
-  }
-
-  try {
-    await addDoc(collection(db, "posts"), {
-      uid: user.uid,
-      text,
-      mediaURL,
-      isVideo,
-      timestamp: serverTimestamp(),
-      ...profileData
-    });
-
-    document.getElementById("postInput").value = "";
-    imageInput.value = "";
-    alert("✅ Publicación realizada con éxito.");
-  } catch (err) {
-    console.error("❌ Error al guardar la publicación:", err);
-    alert("❌ Error al guardar la publicación en Firestore.");
-  } finally {
-    btn.disabled = false;
-    btn.textContent = "Publicar";
-  }
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ========== 📝 PUBLICACIONES ==========
-
-
-
-
-
-// ========== 👥 SEGUIDORES ==========
-
-document.addEventListener("click", async (e) => {
-  if (!e.target.classList.contains("username-link")) return;
-
-  const uid = e.target.dataset.uid;
-  if (!uid) {
-    alert("❌ No se pudo identificar el UID del usuario.");
-    return;
-  }
-
-  console.log("🔍 Clic en username, buscando datos para UID:", uid);
-
-  try {
-    const userRef = doc(db, "usuarios", uid);
-    const userSnap = await getDoc(userRef);
-
-    if (!userSnap.exists()) {
-      alert("❌ Usuario no encontrado en Firestore.");
-      return;
-    }
-
-    const userData = userSnap.data();
-    console.log("✅ Datos del usuario:", userData);
-
-    document.getElementById("profileModal")?.classList.add("hidden");
-    document.getElementById("sellerProfileModal")?.classList.add("hidden");
-
-    document.getElementById("profilePicModal").src = userData.modalPhotoURL || userData.photoURL || "https://via.placeholder.com/80";
-    document.getElementById("modalProfileName").textContent = userData.name || "Usuario";
-    document.getElementById("modalProfileUsername").textContent = "@" + (userData.username || "usuario");
-    document.getElementById("modalProfileBio").textContent = userData.bio || "";
-
-    const editBtn = document.getElementById("openEditProfileFromModal");
-    const followBtn = document.getElementById("followBtn");
-    const currentUser = auth.currentUser;
-    const isOwnProfile = currentUser && currentUser.uid === uid;
-
-    if (isOwnProfile) {
-      editBtn?.classList.remove("hidden");
-      followBtn?.classList.add("hidden");
-    } else {
-      editBtn?.classList.add("hidden");
-      followBtn?.classList.remove("hidden");
-
-      followBtn.dataset.uid = uid;
-
-      const followRef = doc(db, "usuarios", uid, "seguidores", currentUser.uid);
-      const followSnap = await getDoc(followRef);
-
-      if (followSnap.exists()) {
-        followBtn.textContent = "Siguiendo";
-        followBtn.classList.remove("bg-blue-500");
-        followBtn.classList.add("bg-green-500");
-      } else {
-        followBtn.textContent = "Seguir";
-        followBtn.classList.remove("bg-green-500");
-        followBtn.classList.add("bg-blue-500");
-      }
-    }
-
-    const modal = document.getElementById("profileModal");
-    const content = document.getElementById("modalContent");
-
-    modal.classList.remove("hidden");
-    modal.style.display = "flex";
-
-    setTimeout(() => {
-      content.classList.remove("scale-95", "opacity-0");
-      content.classList.add("scale-100", "opacity-100");
-    }, 10);
-
-  } catch (err) {
-    console.error("❌ Error al obtener perfil:", err);
-    alert("❌ No se pudo abrir el perfil.\n\n" + err.message);
-  }
-});
-
-document.getElementById("followBtn")?.addEventListener("click", async function () {
-  const followBtn = this;
-  const viewedUID = followBtn.dataset.uid;
-  const currentUser = auth.currentUser;
-
-  if (!viewedUID || !currentUser) {
-    alert("❌ No se pudo procesar el seguimiento.");
-    return;
-  }
-
-  const followerRef = doc(db, "usuarios", viewedUID, "seguidores", currentUser.uid);
-  const followingRef = doc(db, "usuarios", currentUser.uid, "seguidos", viewedUID);
-
-  try {
-    const docSnap = await getDoc(followerRef);
-
-    if (docSnap.exists()) {
-      await deleteDoc(followerRef);
-      await deleteDoc(followingRef);
-
-      followBtn.textContent = "Seguir";
-      followBtn.classList.remove("bg-green-500");
-      followBtn.classList.add("bg-blue-500");
-    } else {
-      await setDoc(followerRef, {
-        seguidorUID: currentUser.uid,
-        followedAt: Date.now()
-      });
-      await setDoc(followingRef, {
-        seguidoUID: viewedUID,
-        followedAt: Date.now()
-      });
-
-      followBtn.textContent = "Siguiendo";
-      followBtn.classList.remove("bg-blue-500");
-      followBtn.classList.add("bg-green-500");
-    }
-
-    await loadProfileCounts(viewedUID);
-
-  } catch (error) {
-    console.error("❌ Error al seguir/dejar de seguir:", error);
-    alert("❌ Hubo un error al actualizar el seguimiento.\n\n" + error.message);
-  }
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  const profileModal = document.getElementById("profilePicPreviewModal");
-  const profileImgPreview = document.getElementById("previewProfilePic");
-
-  document.addEventListener("click", (e) => {
-    if (e.target.classList.contains("profile-pic-clickable")) {
-      const src = e.target.getAttribute("src");
-      profileImgPreview.src = src;
-      profileModal.classList.remove("hidden");
-    }
-  });
-
-  profileModal.addEventListener("click", (e) => {
-    if (e.target === profileModal) {
-      profileModal.classList.add("hidden");
-      profileImgPreview.src = "";
-    }
-  });
-});
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2665,241 +2862,386 @@ window.showReactionMenu = async function (msg, messageId, container, event) {
 
 // ... código de seguidores ...
 
-// ========== 🛒 PUBLICACIÓN DE PRODUCTOS ==========
 
+
+// ========== 🛒 PUBLICACIÓN DE PRODUCTOS ==========
 if (!window.__MODULO_PUBLICACION_PRODUCTOS_ACTIVO) {
   window.__MODULO_PUBLICACION_PRODUCTOS_ACTIVO = true;
 
   document.addEventListener('DOMContentLoaded', function () {
+    // Variables globales
+    let activePostId = "";
+    const auth = getAuth();
+    const db = getFirestore();
 
+    // Configuración inicial
     const venderBtn = document.getElementById('venderBtn');
     const sellerPostModal = document.getElementById('sellerPostModal');
-    let activePostId = "";
+    
+    if (venderBtn && sellerPostModal) {
+      venderBtn.addEventListener('click', () => {
+        sellerPostModal.classList.remove('hidden');
+        sellerPostModal.classList.add('flex');
+      });
 
-    venderBtn.addEventListener('click', function () {
-      sellerPostModal.classList.remove('hidden');
-      sellerPostModal.classList.add('flex');
-    });
+      window.closeSellerPostModal = function() {
+        sellerPostModal.classList.add('hidden');
+        sellerPostModal.classList.remove('flex');
+      };
+    }
 
-    window.closeSellerPostModal = function () {
-      sellerPostModal.classList.add('hidden');
-      sellerPostModal.classList.remove('flex');
-    };
-
-    window.publicarProducto = async function () {
+    // Función para publicar producto
+    window.publicarProducto = async function() {
       const btn = document.getElementById("publicarProductoBtn");
-      const btnText = btn?.querySelector(".btn-text");
-      const spinner = btn?.querySelector(".spinner");
 
-      if (btn) {
-        btn.disabled = true;
-        if (btnText) btnText.textContent = "Publicando...";
-        if (spinner) spinner.classList.remove("hidden");
-      }
+
+
+if (!btn) return;
+
+btn.disabled = true;
+const btnText = btn.querySelector(".btn-text");
+const spinner = btn.querySelector(".spinner");
+
+if (btnText) btnText.textContent = "Publicando...";
+if (spinner) spinner.classList.remove("hidden");
+
+
 
       try {
-        const titulo = document.getElementById('productTitle').value;
-        const descripcion = document.getElementById('productDescription').value;
-        const precio = document.getElementById('productPrice').value;
-        const imagenFile = document.getElementById('productImage').files[0];
+        // Validación y obtención de datos del formulario
+        const [titulo, descripcion, precio, imagenFile] = [
+          document.getElementById('productTitle').value,
+          document.getElementById('productDescription').value,
+          document.getElementById('productPrice').value,
+          document.getElementById('productImage').files[0]
+        ];
 
         if (!titulo || !descripcion || !precio || !imagenFile) {
-          alert('Completa todos los campos.');
-          return;
+          throw new Error('Completa todos los campos.');
         }
 
-        const auth = getAuth();
         const user = auth.currentUser;
+        if (!user) throw new Error('Debes iniciar sesión primero.');
 
-        if (!user) {
-          alert('Debes iniciar sesión primero.');
-          return;
-        }
+        // Subir imagen a Cloudinary
+        const mediaURL = await uploadMediaToCloudinary(imagenFile);
 
-        const db = getFirestore();
-        const userRef = doc(db, "usuarios", user.uid);
-        const userSnap = await getDoc(userRef);
-
-        const profileData = userSnap.exists() ? userSnap.data() : {
-          username: user.displayName || "Usuario",
-          photoURL: user.photoURL || "https://via.placeholder.com/40"
-        };
-
-        let mediaURL = "";
-        let isVideo = imagenFile.type.startsWith('video/');
-        const formData = new FormData();
-        formData.append('file', imagenFile);
-        formData.append('upload_preset', 'Tweetsocial');
-
-        const uploadURL = isVideo
-          ? "https://api.cloudinary.com/v1_1/dz70korgo/video/upload"
-          : "https://api.cloudinary.com/v1_1/dz70korgo/image/upload";
-
-        const response = await fetch(uploadURL, { method: "POST", body: formData });
-        const data = await response.json();
-
-        if (!data.secure_url) {
-          alert("Error al subir a Cloudinary");
-          return;
-        }
-
-        mediaURL = data.secure_url;
-
+        // Publicar en Firestore
         await addDoc(collection(db, "posts"), {
           tipo: "venta",
           titulo,
           descripcion,
           precio,
           imagen: mediaURL,
-          isVideo,
-          username: profileData.username,
-          photoURL: profileData.modalPhotoURL || profileData.photoURL,
+          isVideo: imagenFile.type.startsWith('video/'),
+          username: user.displayName || "Usuario",
+          photoURL: user.photoURL || "https://via.placeholder.com/40",
           uid: user.uid,
           timestamp: serverTimestamp()
         });
 
-        document.getElementById('productTitle').value = "";
-        document.getElementById('productDescription').value = "";
-        document.getElementById('productPrice').value = "";
-        document.getElementById('productImage').value = "";
+        // Limpiar formulario
+        ['productTitle', 'productDescription', 'productPrice', 'productImage'].forEach(id => {
+          document.getElementById(id).value = "";
+        });
 
         closeSellerPostModal();
         alert("✅ Producto publicado exitosamente.");
       } catch (error) {
         console.error("❌ Error al publicar:", error);
-        alert("Error al publicar. Revisa la consola.");
+        alert(error.message);
       } finally {
         if (btn) {
           btn.disabled = false;
+          const btnText = btn.querySelector(".btn-text");
           if (btnText) btnText.textContent = "Publicar";
+          const spinner = btn.querySelector(".spinner");
           if (spinner) spinner.classList.add("hidden");
         }
       }
     };
 
 
-
-
-
-
-
-
+    // Escuchar posts en tiempo real
     function listenForPosts() {
-      const db = getFirestore();
       const postsContainer = document.getElementById("postsContainer");
+      if (!postsContainer) return;
+
       const q = query(collection(db, "posts"), orderBy("timestamp", "desc"));
 
       onSnapshot(q, (snapshot) => {
         postsContainer.innerHTML = "";
         snapshot.forEach((doc) => {
-          const postData = doc.data();
-          const postId = doc.id;
-          postsContainer.insertAdjacentHTML('beforeend', renderPostHTML(postData, {}, postId));
+          postsContainer.insertAdjacentHTML('beforeend',
+            renderPostHTML(doc.data(), {}, doc.id)
+          );
         });
       }, (error) => {
         console.error("Error en snapshot:", error);
       });
     }
 
-    listenForPosts();
-
-
-
-
-
-
-
-
-    document.addEventListener('click', async function (e) {
+    // Manejadores de eventos unificados
+    document.addEventListener('click', async function(e) {
       const clicked = e.target;
-
+      
+      // Manejo de medios
       if (clicked.classList.contains('media-clickable')) {
-        const src = clicked.src;
-        const isVideo = clicked.tagName.toLowerCase() === 'video';
-        const mediaContainer = document.getElementById('mediaContainer');
-        mediaContainer.innerHTML = isVideo
-          ? `<video controls autoplay class="max-w-full max-h-screen rounded shadow"><source src="${src}" type="video/mp4"></video>`
-          : `<img src="${src}" class="max-w-full max-h-screen rounded shadow" alt="Media">`;
-        document.getElementById('mediaModal').classList.remove('hidden');
+        handleMediaClick(clicked);
+        return;
       }
 
+      // Manejo de comentarios en modal
       if (clicked.classList.contains('show-comments-btn')) {
         activePostId = clicked.getAttribute('data-post-id');
-        document.getElementById('commentsModal').classList.remove('hidden');
-        document.getElementById('commentsModal').classList.add('flex');
-        loadModalComments(activePostId);
+        openCommentsModal(activePostId);
+        return;
       }
 
       if (clicked.id === 'modalSendCommentBtn') {
-        const input = document.getElementById('modalCommentInput');
-        const text = input.value.trim();
+        await handleCommentSubmission(true);
+        return;
+      }
 
-        if (!text) return alert("Escribe un comentario");
+      // Manejo de comentarios en post
+      const sendBtn = e.target.closest(".comment-submit");
+      const toggleBtn = e.target.closest(".toggle-comments-btn");
 
-        const auth = getAuth();
-        const user = auth.currentUser;
-        if (!user) return alert("Debes iniciar sesión");
+      if (toggleBtn) {
+        toggleCommentsSection(toggleBtn);
+        return;
+      }
 
-        const db = getFirestore();
-        const userRef = doc(db, "usuarios", user.uid);
-        const userSnap = await getDoc(userRef);
-        const profile = userSnap.exists() ? userSnap.data() : {
-          username: user.displayName || "Usuario",
-          photoURL: user.photoURL || "https://via.placeholder.com/40"
-        };
+      if (sendBtn) {
+        await handleCommentSubmission(false, sendBtn);
+      }
+    });
 
-        await addDoc(collection(db, "posts", activePostId, "comentarios"), {
+    // Funciones auxiliares
+    async function uploadMediaToCloudinary(file) {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', 'Tweetsocial');
+
+      const uploadURL = file.type.startsWith('video/')
+        ? "https://api.cloudinary.com/v1_1/dz70korgo/video/upload"
+        : "https://api.cloudinary.com/v1_1/dz70korgo/image/upload";
+
+      const response = await fetch(uploadURL, { method: "POST", body: formData });
+      const data = await response.json();
+      
+      if (!data.secure_url) throw new Error("Error al subir a Cloudinary");
+      return data.secure_url;
+    }
+
+    function handleMediaClick(element) {
+      const src = element.src;
+      const isVideo = element.tagName.toLowerCase() === 'video';
+      const mediaContainer = document.getElementById('mediaContainer');
+      
+      mediaContainer.innerHTML = isVideo
+        ? `<video controls autoplay class="max-w-full max-h-screen rounded shadow"><source src="${src}" type="video/mp4"></video>`
+        : `<img src="${src}" class="max-w-full max-h-screen rounded shadow" alt="Media">`;
+      
+      document.getElementById('mediaModal').classList.remove('hidden');
+    }
+
+    function openCommentsModal(postId) {
+      document.getElementById('commentsModal').classList.remove('hidden');
+      document.getElementById('commentsModal').classList.add('flex');
+      loadComments(postId, document.getElementById('commentsModalContent'));
+    }
+
+    async function toggleCommentsSection(button) {
+      const post = button.closest(".post");
+      const section = post.querySelector(".comments-section");
+      section.classList.toggle("hidden");
+
+      if (!section.classList.contains("hidden")) {
+        await loadComments(
+          post.dataset.postId, 
+          section.querySelector(".comments-list")
+        );
+      }
+    }
+
+    async function handleCommentSubmission(isModal, button = null) {
+      const input = isModal 
+        ? document.getElementById('modalCommentInput')
+        : button?.closest(".post")?.querySelector(".comment-input");
+      
+      const text = input?.value.trim();
+      if (!text) return alert("Escribe un comentario");
+
+      const user = auth.currentUser;
+      if (!user) return alert("Debes iniciar sesión");
+
+      const postId = isModal 
+        ? activePostId 
+        : button?.closest(".post")?.dataset.postId;
+      
+      if (!postId) return;
+
+      try {
+        await addDoc(collection(db, "posts", postId, "comentarios"), {
           text,
           uid: user.uid,
-          username: profile.username,
-          photoURL: profile.photoURL,
+          username: user.displayName || "Usuario",
+          photoURL: user.photoURL || "https://via.placeholder.com/40",
           timestamp: serverTimestamp()
         });
 
         input.value = "";
+        
+        if (isModal) {
+          loadComments(postId, document.getElementById('commentsModalContent'));
+        } else {
+          const section = button.closest(".post")?.querySelector(".comments-section");
+          if (section && !section.classList.contains("hidden")) {
+            await loadComments(postId, section.querySelector(".comments-list"));
+          }
+        }
+      } catch (error) {
+        console.error("Error al publicar comentario:", error);
+        alert("Error al publicar comentario");
       }
-    });
+    }
 
-    window.closeMediaModal = function () {
+    async function loadComments(postId, container) {
+      if (!container) return;
+      
+      container.innerHTML = "<span class='text-sm text-gray-400'>Cargando...</span>";
+
+      try {
+        const snap = await getDocs(query(
+          collection(db, "posts", postId, "comentarios"),
+          orderBy("timestamp", "asc")
+        ));
+
+        container.innerHTML = "";
+        snap.forEach(doc => {
+          const data = doc.data();
+          container.innerHTML += `
+            <div class="flex items-start gap-2 text-sm mb-1">
+              <img src="${data.photoURL}" class="w-6 h-6 rounded-full" />
+              <div>
+                <span class="font-semibold">@${data.username}</span>
+                <p>${data.text}</p>
+              </div>
+            </div>
+          `;
+        });
+      } catch (error) {
+        console.error("Error cargando comentarios:", error);
+        container.innerHTML = "<span class='text-sm text-red-500'>Error cargando comentarios</span>";
+      }
+    }
+
+
+
+// ========== 🌐 FUNCIÓN PARA COMPARTIR POSTS ==========
+window.sharePost = async function(postId) {
+  const shareBtn = document.querySelector(`[onclick="sharePost('${postId}')]`);
+  const btnText = shareBtn?.querySelector('span');
+  const originalText = btnText?.textContent;
+  
+  if (shareBtn) {
+    shareBtn.disabled = true;
+    if (btnText) btnText.textContent = "Compartiendo...";
+    shareBtn.classList.add('opacity-75');
+  }
+
+  try {
+    const db = getFirestore();
+    const postRef = doc(db, "posts", postId);
+    const postSnap = await getDoc(postRef);
+    
+    if (!postSnap.exists()) {
+      showToast('error', 'La publicación no existe o fue eliminada');
+      return;
+    }
+
+    const postData = postSnap.data();
+    const shareUrl = `${window.location.origin}/post/${postId}`;
+
+    const shareData = {
+      title: postData.tipo === "venta" 
+        ? `🛍️ ${postData.titulo || "Producto sin título"}` 
+        : "📢 Mira esta publicación",
+      text: postData.tipo === "venta"
+        ? `${postData.descripcion || ""}\n💰 Precio: $${postData.precio || 0}`
+        : postData.text || "",
+      url: shareUrl
+    };
+
+    if (navigator.share) {
+      // Compartir solo texto + URL (sin imágenes)
+      await navigator.share(shareData);
+    } else {
+      const shareText = `${shareData.title}\n${shareData.text}\n\n🔗 ${shareData.url}`;
+      
+      if (navigator.clipboard) {
+        await navigator.clipboard.writeText(shareText);
+        showToast('success', '¡Enlace copiado al portapapeles!');
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = shareText;
+        textarea.style.position = 'fixed';
+        document.body.appendChild(textarea);
+        textarea.select();
+        
+        try {
+          document.execCommand('copy');
+          showToast('success', 'Enlace copiado');
+        } catch (execError) {
+          window.open(`mailto:?subject=${encodeURIComponent(shareData.title)}&body=${encodeURIComponent(shareText)}`, '_blank');
+        }
+
+        document.body.removeChild(textarea);
+      }
+    }
+
+  } catch (error) {
+    if (error.name !== 'AbortError') {
+      console.error("Error al compartir:", error);
+      showToast('error', `Error al compartir: ${error.message}`);
+    }
+  } finally {
+    if (shareBtn) {
+      shareBtn.disabled = false;
+      if (btnText) btnText.textContent = originalText;
+      shareBtn.classList.remove('opacity-75');
+    }
+  }
+};
+
+// Función auxiliar para mostrar notificaciones
+function showToast(type, message) {
+  alert(message); // Usa tu propio sistema si tienes uno
+}
+
+
+
+
+
+    // Funciones para cerrar modales
+    window.closeMediaModal = function() {
       document.getElementById('mediaModal').classList.add('hidden');
       document.getElementById('mediaContainer').innerHTML = "";
     };
 
-    window.closeCommentsModal = function () {
+    window.closeCommentsModal = function() {
       document.getElementById('commentsModal').classList.add('hidden');
       document.getElementById('commentsModal').classList.remove('flex');
       document.getElementById('commentsModalContent').innerHTML = "";
       activePostId = "";
     };
 
-    function loadModalComments(postId) {
-      const db = getFirestore();
-      const container = document.getElementById('commentsModalContent');
-      const q = query(collection(db, "posts", postId, "comentarios"), orderBy("timestamp", "asc"));
-
-      onSnapshot(q, (snapshot) => {
-        container.innerHTML = "";
-        snapshot.forEach((doc) => {
-          const c = doc.data();
-          container.insertAdjacentHTML('beforeend', `
-            <div class="flex items-start space-x-2 my-2">
-              <img src="${c.photoURL}" class="w-8 h-8 rounded-full mt-1" alt="user">
-              <div class="bg-gray-100 rounded-lg p-2">
-                <span class="font-semibold text-sm text-blue-600">@${c.username}</span>
-                <p class="text-gray-800 text-sm">${c.text}</p>
-              </div>
-            </div>
-          `);
-        });
-      });
-    }
+    // Iniciar
+    listenForPosts();
   });
 }
 
-// ========== 🔧 UTILIDADES ==========
-// showToast, formatear fecha, limpiar modales, etc
-
-// ... código de utilidades ...
 
 
 
@@ -2915,89 +3257,6 @@ if (!window.__MODULO_PUBLICACION_PRODUCTOS_ACTIVO) {
 
 
 
-document.addEventListener("click", async (e) => {
-  const sendBtn = e.target.closest(".comment-submit");
-  const toggleBtn = e.target.closest(".toggle-comments-btn");
-
-  // 👉 Mostrar/Ocultar sección de comentarios
-  if (toggleBtn) {
-    const post = toggleBtn.closest(".post");
-    const section = post.querySelector(".comments-section");
-    section.classList.toggle("hidden");
-
-    const postId = post.dataset.postId;
-    if (!section.classList.contains("hidden")) {
-      console.log("🔁 Cargando comentarios del post:", postId);
-      await loadComments(postId, section);
-    }
-  }
-
-  // 👉 Enviar comentario
-  if (sendBtn) {
-    const post = sendBtn.closest(".post");
-    const postId = post.dataset.postId;
-    const input = post.querySelector(".comment-input");
-    const text = input.value.trim();
-
-    if (!text) return alert("Escribe algo antes de enviar");
-
-    const user = auth.currentUser;
-    if (!user) return alert("Debes iniciar sesión");
-
-    const commentData = {
-      uid: user.uid,
-      text,
-      timestamp: serverTimestamp(),
-      username: user.displayName || "Usuario",
-      photoURL: user.photoURL || "https://via.placeholder.com/40"
-    };
-
-    try {
-      await addDoc(collection(db, "posts", postId, "comentarios"), commentData);
-      console.log("✅ Comentario publicado en el post:", postId);
-      input.value = "";
-
-      // Asegúrate que la sección exista
-      const commentsSection = post.querySelector(".comments-section");
-      await loadComments(postId, commentsSection);
-    } catch (error) {
-      console.error("❌ Error al publicar comentario:", error);
-      alert("Error al publicar comentario. Revisa consola.");
-    }
-  }
-});
-
-
-
-
-async function loadComments(postId, container) {
-  const commentsList = container.querySelector(".comments-list");
-  if (!commentsList) return console.warn("⚠️ No se encontró .comments-list");
-
-  commentsList.innerHTML = "<span class='text-sm text-gray-400'>Cargando...</span>";
-
-  const snap = await getDocs(query(
-    collection(db, "posts", postId, "comentarios"),
-    orderBy("timestamp", "asc")
-  ));
-
-  commentsList.innerHTML = "";
-
-  snap.forEach(doc => {
-    const data = doc.data();
-    commentsList.innerHTML += `
-      <div class="flex items-start gap-2 text-sm mb-1">
-        <img src="${data.photoURL}" class="w-6 h-6 rounded-full" />
-        <div>
-          <span class="font-semibold">@${data.username}</span>
-          <p>${data.text}</p>
-        </div>
-      </div>
-    `;
-  });
-
-  console.log(`🗨️ Comentarios cargados para el post: ${postId} (${snap.size} encontrados)`);
-}
 
 
 
@@ -3032,7 +3291,7 @@ async function loadComments(postId, container) {
 
         toggleBtn.addEventListener('click', () => {
             isCollapsed = !isCollapsed;
-            
+
             if(isCollapsed) {
                 sidebar.classList.add('sidebar-collapsed');
                 toggleBtn.innerHTML = `
@@ -3067,6 +3326,39 @@ async function loadComments(postId, container) {
 
 
 
+// Manejo de Interacciones Móviles y Perfil
+document.getElementById("mobileEditBtn").addEventListener("click", () => {
+  document.getElementById("openEditProfileFromModal").click();
+});
+
+document.getElementById("mobileCrearBtn").addEventListener("click", () => {
+  document.getElementById("crearPublicacionBtn").click();
+});
+
+document.getElementById("mobileVenderBtn").addEventListener("click", () => {
+  document.getElementById("venderBtn").click();
+});
+
+// Adaptamos el botón de perfil en móvil (mismo comportamiento que loginBtn)
+document.getElementById("loginBtnMobile").addEventListener("click", () => {
+  document.getElementById("loginBtn").click();
+});
+
+// Función que simula el login y actualiza ambos perfiles
+function mostrarPerfil(nombreUsuario, fotoUrl) {
+  // Mostrar en PC
+  document.getElementById("loginBtn").classList.add("hidden");
+  document.getElementById("profileContainerSidebar").classList.remove("hidden");
+  document.getElementById("usernameSidebar").innerText = nombreUsuario;
+  document.getElementById("profilePicSidebar").src = fotoUrl;                                             
+  // Mostrar en móvil
+  document.getElementById("loginBtnMobile").classList.add("hidden");
+  document.getElementById("profileContainerMobile").classList.remove("hidden");
+  document.getElementById("profilePicMobile").src = fotoUrl;
+}
+
+// Simulación: ya estabas logueado
+// mostrarPerfil("Carlos", "https://i.pravatar.cc/100");
 
 
 
@@ -3077,46 +3369,27 @@ async function loadComments(postId, container) {
 
 
 
+const publicarBtn = document.getElementById("publicarBtn");
 
+publicarBtn?.addEventListener("click", async () => {
+  if (publicarBtn.disabled) return; // evita múltiples clics
 
+  publicarBtn.disabled = true; // desactiva botón
+  publicarBtn.textContent = "Publicando..."; // opcional: cambiar texto
 
-
-
-
-
-  document.getElementById("mobileEditBtn").addEventListener("click", () => {
-    document.getElementById("openEditProfileFromModal").click();
-  });
-
-  document.getElementById("mobileCrearBtn").addEventListener("click", () => {
-    document.getElementById("crearPublicacionBtn").click();
-  });
-
-  document.getElementById("mobileVenderBtn").addEventListener("click", () => {
-    document.getElementById("venderBtn").click();
-  });
-
-  // Adaptamos el botón de perfil en móvil (mismo comportamiento que loginBtn)
-  document.getElementById("loginBtnMobile").addEventListener("click", () => {
-    document.getElementById("loginBtn").click();
-  });
-
-  // Función que simula el login y actualiza ambos perfiles
-  function mostrarPerfil(nombreUsuario, fotoUrl) {
-    // Mostrar en PC
-    document.getElementById("loginBtn").classList.add("hidden");
-    document.getElementById("profileContainerSidebar").classList.remove("hidden");
-    document.getElementById("usernameSidebar").innerText = nombreUsuario;
-    document.getElementById("profilePicSidebar").src = fotoUrl;
-
-    // Mostrar en móvil
-    document.getElementById("loginBtnMobile").classList.add("hidden");
-    document.getElementById("profileContainerMobile").classList.remove("hidden");
-    document.getElementById("profilePicMobile").src = fotoUrl;
+  try {
+    await publicarPost(); // tu función principal para publicar
+    // opcional: feedback visual o redirección
+  } catch (error) {
+    console.error("❌ Error al publicar:", error);
+    alert("Ocurrió un error al publicar. Intenta de nuevo.");
+    publicarBtn.disabled = false; // reactivar si falla
+    publicarBtn.textContent = "Publicar"; // restaurar texto
   }
+});
 
-  // Simulación: ya estabas logueado
-  // mostrarPerfil("Carlos", "https://i.pravatar.cc/100");
+
+
 
 
 
