@@ -5,9 +5,15 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Perfil de Usuario</title>
+    <title>Tweet🐔</title>
 
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+
 <style>
 
 /* Estilos del contenedor de perfil */
@@ -106,6 +112,83 @@
 
 
 
+/* Modo oscuro mejorado */
+/* ----- Textos y Botones Críticos ----- */
+body.dark-mode {
+    background-color: #0f0f0f;  /* Fondo más claro que negro puro */
+}
+
+/* Títulos y textos principales */
+body.dark-mode .post-title, 
+body.dark-mode .username, 
+body.dark-mode .post-content {
+    color: #f0f0f0 !important;  /* Blanco roto */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* Mejor contraste */
+}
+
+/* Botones de interacción (Comentarios, Me gusta, etc.) */
+body.dark-mode .interaction-buttons {
+    background-color: #1a1a1a;
+    border-top: 1px solid #333;
+    padding: 12px 0;
+}
+
+body.dark-mode .interaction-btn {
+    color: #bbbbbb !important;  /* Gris claro */
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 20px;
+    margin: 0 5px;
+    transition: all 0.2s;
+}
+
+/* Efecto hover para destacar */
+body.dark-mode .interaction-btn:hover {
+    background-color: #333 !important;
+    color: #fff !important;
+}
+
+/* Botón "Publicar" (destacado) */
+body.dark-mode .publish-btn {
+    background: linear-gradient(135deg, #8a2be2, #5f27cd) !important;
+    color: white !important;
+    border: none;
+    font-size: 1.1em;
+    box-shadow: 0 2px 10px rgba(139, 0, 255, 0.3);
+}
+
+/* Stats numéricos (78990, 72650) */
+body.dark-mode .stats-value {
+    color: #4cc9f0 !important;  /* Azul neón */
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Animación -->
+@keyframes fade-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out forwards;
+}
+
+
 
 
 
@@ -114,12 +197,13 @@
 </style>
 </head>
 
+
 <body class="bg-gray-50 dark:bg-gray-900">
     <div class="flex min-h-screen">
         <!-- Sidebar moderno con glassmorphism -->
-        <aside id="sidebar" class="bg-white/80 dark:bg-gray-800/90 backdrop-blur-lg border-r border-gray-200 dark:border-gray-700 sticky top-0 h-screen overflow-y-auto transition-all duration-300 ease-in-out w-72 shadow-xl">
+        <aside id="sidebar" class="bg-white/80 dark:bg-gray-800/90 backdrop-blur-lg border-r border-gray-200 dark:border-gray-700 sticky top-0 h-screen overflow-y-auto transition-all duration-300 w-72">
             <!-- Botón para contraer/expandir mejorado -->
-            <button id="toggleSidebar" class="absolute -right-3 top-5 bg-white dark:bg-gray-700 rounded-full shadow-lg p-1.5 z-10 hover:bg-gray-100 dark:hover:bg-gray-600 transition-all hover:scale-110">
+            <button id="toggleSidebar" class="absolute -right-3 top-5 bg-white dark:bg-gray-700 rounded-full shadow-lg p-1.5 z-10 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
@@ -139,7 +223,7 @@
 
                 <!-- Contenedor de Login / Perfil mejorado -->
                 <div id="authContainer" class="mb-8">
-                    <button id="loginBtn" class="w-full flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white p-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group">
+                    <button id="loginBtn" class="w-full flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white py-2.5 px-4 rounded-lg shadow-md transition-all duration-300 group">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
@@ -147,9 +231,9 @@
                     </button>
 
                     <!-- Contenedor del perfil premium -->
-                    <div id="profileContainerSidebar" class="hidden group flex items-center p-3 rounded-xl bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-all duration-300 shadow-sm">
+                    <div id="profileContainerSidebar" class="hidden group flex items-center p-3 rounded-xl bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 cursor-pointer">
                         <div class="relative">
-                            <img id="profilePicSidebar" src="https://via.placeholder.com/50" alt="Perfil" class="w-11 h-11 rounded-xl object-cover border-2 border-white dark:border-gray-600 shadow-md">
+                            <img id="profilePicSidebar" src="https://via.placeholder.com/50" alt="Perfil" class="w-11 h-11 rounded-xl object-cover border-2 border-white dark:border-gray-700">
                             <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white dark:border-gray-700"></div>
                         </div>
                         <div class="ml-3">
@@ -163,7 +247,7 @@
                     <ul class="space-y-1.5">
                         <li>
                             <a href="#" class="flex items-center p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-all duration-200 group">
-                                <div class="sidebar-icon w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:bg-blue-200 dark:group-hover:bg-blue-800/30 transition-colors">
+                                <div class="sidebar-icon w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:bg-blue-200 dark:group-hover:bg-blue-900/50 transition-colors duration-200">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                                     </svg>
@@ -174,18 +258,18 @@
                         </li>
                         <li>
                             <a href="#" class="flex items-center p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-all duration-200 group">
-                                <div class="sidebar-icon w-8 h-8 rounded-lg bg-red-100 dark:bg-red-900/30 flex items-center justify-center text-red-600 dark:text-red-400 group-hover:bg-red-200 dark:group-hover:bg-red-800/30 transition-colors">
+                                <div class="sidebar-icon w-8 h-8 rounded-lg bg-red-100 dark:bg-red-900/30 flex items-center justify-center text-red-600 dark:text-red-400 group-hover:bg-red-200 dark:group-hover:bg-red-900/50 transition-colors duration-200">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                                     </svg>
                                 </div>
-                                <span class="sidebar-text ml-3 text-gray-700 dark:text-gray-300 group-hover:text-red-600 dark:group-hover:text-red-400">NotifixD</span>
+                                <span class="sidebar-text ml-3 text-gray-700 dark:text-gray-300 group-hover:text-red-600 dark:group-hover:text-red-400">Notificaciones</span>
                                 <span class="ml-auto bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-xs px-2 py-1 rounded-full font-medium">3</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="flex items-center p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-all duration-200 group">
-                                <div class="sidebar-icon w-8 h-8 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 group-hover:bg-green-200 dark:group-hover:bg-green-800/30 transition-colors">
+                            <a href="#" onclick="openSimpleMessagesModal()" class="flex items-center p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-all duration-200 group">
+                                <div class="sidebar-icon w-8 h-8 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 group-hover:bg-green-200 dark:group-hover:bg-green-900/50 transition-colors duration-200">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                                     </svg>
@@ -194,8 +278,8 @@
                             </a>
                         </li>
                         <li>
-                            <button id="openEditProfileFromModal" class="w-full flex items-center p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-all duration-200 group text-left">
-                                <div class="sidebar-icon w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400 group-hover:bg-purple-200 dark:group-hover:bg-purple-800/30 transition-colors">
+                            <button id="openEditProfileFromModal" class="w-full flex items-center p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-all duration-200 group">
+                                <div class="sidebar-icon w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400 group-hover:bg-purple-200 dark:group-hover:bg-purple-900/50 transition-colors duration-200">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -207,7 +291,6 @@
                     </ul>
                 </nav>
 
-                
                 <!-- Botones -->
                 <button id="crearPublicacionBtn" class="w-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg mt-4 transition duration-200 shadow-md">
                     <span class="sidebar-icon">+</span>
@@ -219,6 +302,25 @@
                 </button>
             </div>
         </aside>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -274,18 +376,20 @@
       </button>
     </li>
 
-    <!-- Perfil (👤 → Icono SVG o imagen) -->
-    <li>
-      <button id="mobilePerfilBtn" class="relative flex flex-col items-center text-gray-600 hover:text-blue-600 transition">
-        <!-- Imagen de perfil (oculta por defecto) -->
-        <img id="mobileProfilePic" src="" alt="Perfil" class="hidden w-6 h-6 rounded-full border-2 border-blue-500 object-cover" />
-        <!-- Ícono SVG por defecto -->
-        <svg id="mobileProfileIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-        </svg>
-        <span class="text-xs mt-1">Perfil</span>
-      </button>
-    </li>
+   <!-- Perfil - Solo ícono circular -->
+<li>
+  <button id="mobilePerfilBtn" class="relative flex items-center justify-center text-gray-600 hover:text-blue-500 dark:hover:text-blue-400 transition-colors">
+    <!-- Contenedor de imagen de perfil ampliado -->
+    <div class="relative w-10 h-10"> <!-- Tamaño aumentado a w-10 h-10 -->
+      <!-- Imagen de perfil (oculta por defecto) -->
+      <img id="mobileProfilePic" src="" alt="Perfil" class="hidden w-full h-full rounded-full object-cover border-2 border-white dark:border-gray-700 shadow-sm">
+      <!-- Ícono SVG por defecto -->
+      <svg id="mobileProfileIcon" xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 h-full w-full p-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+      </svg>
+    </div>
+  </button>
+</li>
 
   </ul>
 </nav>
@@ -397,32 +501,110 @@
     
 
 
-    <!-- MODAL PARA EDITAR PERFIL -->
-<div id="editProfileModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-  <div class="bg-white p-6 rounded-lg shadow-lg text-center w-96 relative">
-    <button id="closeEditProfileModal" class="absolute top-2 right-2 text-gray-600 text-xl hover:text-gray-800">&times;</button>
-    <h2 class="text-xl font-bold mb-4">Editar Perfil</h2>
 
-    <!-- Imagen de Perfil -->
-    <img id="editProfilePic" src="https://via.placeholder.com/80" class="w-20 h-20 rounded-full mx-auto mb-3">
 
-    <!-- Input para cambiar nombre -->
-    <input id="editProfileName" type="text" class="border p-2 w-full rounded mb-4" placeholder="Nuevo nombre">
 
-    <!-- NUEVOS CAMPOS: Nombre de usuario y biografía -->
-    <input id="editProfileUsername" type="text" class="border p-2 w-full rounded mb-4" placeholder="Nombre de usuario (ej. @charly)">
-    <textarea id="editProfileBio" class="border p-2 w-full rounded mb-4" rows="3" placeholder="Biografía del usuario..."></textarea>
 
-    <!-- Botón para guardar cambios -->
-    <button id="saveProfileBtn" class="bg-blue-500 text-white px-4 py-2 rounded mb-2 w-full">Guardar cambios</button>
+<!-- MODAL EDITAR PERFIL - ESTILO MODERNO GEN Z CON SVG MEJORADOS -->
+<div id="editProfileModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-md transition-all duration-300">
+  <div class="bg-white dark:bg-gray-900 p-6 sm:p-8 rounded-2xl shadow-2xl w-11/12 max-w-md relative border border-gray-200 dark:border-gray-800 animate-fade-in">
+    
+    <!-- Botón cerrar - Icono moderno -->
+    <button id="closeEditProfileModal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 dark:hover:text-white transition duration-200">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 24 24" fill="none">
+        <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12 12l4.95 4.95m-9.9-9.9L12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-opacity="0.5"/>
+      </svg>
+    </button>
 
-    <!-- 🔄 Botón para cambiar a cuenta de vendedor -->
-    <button id="switchToSellerBtn" class="bg-yellow-500 text-white px-4 py-2 rounded mb-2 w-full">Cambiar a cuenta de vendedor</button>
+    <!-- Título -->
+    <h2 class="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-white">Editar perfil</h2>
 
-    <!-- Botón para cerrar sesión -->
-    <button id="logoutBtn" class="bg-red-500 text-white px-4 py-2 rounded w-full">Cerrar sesión</button>
+    <!-- Imagen de Perfil - Icono de cámara mejorado -->
+    <div class="relative mx-auto w-24 h-24 mb-6 group">
+      <img id="editProfilePic" src="https://i.pinimg.com/564x/16/f7/52/16f752812b45c61e5b51e24c69d998dc.jpg" class="w-full h-full rounded-full object-cover border-4 border-white dark:border-gray-700 shadow-lg transition duration-300 group-hover:scale-105">
+      <div class="absolute inset-0 bg-black bg-opacity-40 rounded-full opacity-0 group-hover:opacity-100 flex items-center justify-center transition duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" viewBox="0 0 24 24" fill="none">
+          <path d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10z" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M8 12a4 4 0 108 0 4 4 0 00-8 0z" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M17 7.5V5.8c0-.995 0-1.493-.191-1.86a1.8 1.8 0 00-.749-.75C15.693 3 15.195 3 14.2 3H9.8c-.995 0-1.493 0-1.86.19a1.8 1.8 0 00-.75.75C7 4.307 7 4.805 7 5.8v1.7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Inputs -->
+    <div class="space-y-5">
+      <div>
+        <label for="editProfileName" class="block text-sm text-gray-600 dark:text-gray-300 mb-1">Nombre</label>
+        <input id="editProfileName" type="text" class="w-full px-4 py-2 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-800 dark:text-white transition" placeholder="Tu nombre">
+      </div>
+
+      <div>
+        <label for="editProfileUsername" class="block text-sm text-gray-600 dark:text-gray-300 mb-1">Usuario</label>
+        <input id="editProfileUsername" type="text" class="w-full px-4 py-2 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-800 dark:text-white transition" placeholder="@usuario">
+      </div>
+
+      <div>
+        <label for="editProfileBio" class="block text-sm text-gray-600 dark:text-gray-300 mb-1">Biografía</label>
+        <textarea id="editProfileBio" rows="3" class="w-full px-4 py-2 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 text-gray-800 dark:text-white transition" placeholder="Cuéntanos algo sobre ti..."></textarea>
+      </div>
+    </div>
+
+    <!-- Botones con iconos mejorados -->
+    <div class="mt-8 space-y-3">
+
+      <!-- Guardar cambios - Checkmark moderno -->
+      <button id="saveProfileBtn" class="w-full py-2 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-xl shadow transition flex items-center justify-center gap-2">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+          <path d="M7 13l3 3 7-7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="currentColor" stroke-width="1.8" stroke-opacity="0.7"/>
+        </svg>
+        Guardar cambios
+      </button>
+
+      <!-- Convertirse en vendedor - Icono de tienda moderno -->
+      <button id="switchToSellerBtn" class="w-full py-2 px-4 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-xl shadow transition flex items-center justify-center gap-2">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+          <path d="M3 10h18v9a2 2 0 01-2 2H5a2 2 0 01-2-2v-9z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M3 10l1.575-6.299A1 1 0 015.561 3h12.878a1 1 0 01.986 1.701L21 10" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M9 14v3M15 14v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        Convertirme en vendedor
+      </button>
+
+      <!-- Cambiar tema - Icono de sol/luna más detallado -->
+      <button id="theme-toggle" class="w-full py-2 px-4 bg-gray-700 hover:bg-gray-800 text-white font-medium rounded-xl transition flex items-center justify-center gap-2">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+          <path d="M12 16a4 4 0 100-8 4 4 0 000 8z" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M12 3V2M12 22v-1M18.36 5.64l.71-.71M4.93 19.07l.71-.71M21 12h-1M4 12H3M18.36 18.36l.71.71M4.93 4.93l.71.71" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        Cambiar tema
+      </button>
+
+      <!-- Cerrar sesión - Icono de salida moderno -->
+      <button id="logoutBtn" class="w-full py-2 px-4 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl font-medium transition flex items-center justify-center gap-2">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+          <path d="M15 16.5V19a2 2 0 01-2 2H6a2 2 0 01-2-2V5a2 2 0 012-2h7a2 2 0 012 2v3.063" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M10 12h10m0 0l-3-3m3 3l-3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Cerrar sesión
+      </button>
+    </div>
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -618,33 +800,88 @@
 
 
 
-<!-- Modal de Mensajes Simple -->
-<div id="simpleMessagesModal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 hidden" style="display: none;">
-  <div class="bg-white rounded-xl shadow-lg w-full max-w-md p-4 space-y-4">
-
-    <div class="flex justify-between items-center border-b pb-2">
-      <h2 class="text-lg font-bold">💬 Hablar con alguien</h2>
-      <button onclick="closeSimpleMessagesModal()" class="text-xl">&times;</button>
+<!-- Modal de Mensajes Simple - Versión Corregida y Mejorada -->
+<div id="simpleMessagesModal" class="fixed inset-0 z-50 hidden">
+  <!-- Fondo oscuro para móviles -->
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm md:bg-transparent md:backdrop-blur-none" onclick="closeSimpleMessagesModal()"></div>
+  
+  <!-- Contenedor principal - Responsivo -->
+  <div class="absolute md:relative h-full md:h-auto bg-white dark:bg-gray-800 rounded-t-xl md:rounded-xl shadow-xl md:shadow-lg w-full max-w-md md:max-w-sm mx-auto md:mx-4 mt-auto md:mt-0 bottom-0 md:bottom-auto md:right-0 md:top-16 border border-gray-200 dark:border-gray-700 transform transition-transform duration-300 ease-out">
+    <!-- Encabezado -->
+    <div class="flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-700 sticky top-0 bg-white dark:bg-gray-800 z-10">
+      <h2 class="text-lg font-bold text-gray-800 dark:text-white flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+        </svg>
+        Mensajes
+      </h2>
+      <button onclick="closeSimpleMessagesModal()" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 text-xl p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+        &times;
+      </button>
     </div>
 
-    <!-- Lista de usuarios que sigues -->
-    <div id="simpleFollowingList" class="space-y-3 max-h-64 overflow-y-auto">
-      <!-- Aquí se cargan los usuarios seguidos -->
-    </div>
-
-    <!-- Chat básico -->
-    <div id="simpleChatBox" class="hidden space-y-2">
-      <div class="text-sm text-gray-700 font-medium" id="chatWithName">Hablando con:</div>
-      <div id="simpleChatMessages" class="h-40 overflow-y-auto bg-gray-50 rounded p-2 text-sm border"></div>
-
-      <div class="flex gap-2">
-        <input type="text" id="simpleMessageInput" class="flex-1 border rounded px-3 py-1 text-sm" placeholder="Escribe un mensaje...">
-        <button onclick="sendSimpleMessage()" class="bg-indigo-500 text-white px-4 py-1 rounded text-sm">Enviar</button>
+    <!-- Lista de contactos -->
+    <div id="simpleFollowingList" class="p-4 space-y-3 max-h-[calc(100vh-120px)] md:max-h-[70vh] overflow-y-auto">
+      <!-- Ejemplo de contacto - Se cargarán dinámicamente -->
+      <div class="contact-item flex items-center p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+        <img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-10 h-10 rounded-full object-cover border-2 border-white dark:border-gray-600 shadow-sm">
+        <div class="ml-3 flex-1 min-w-0">
+          <h3 class="font-medium text-gray-900 dark:text-white truncate">María González</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 truncate">Hola! ¿Cómo estás?</p>
+        </div>
+        <span class="text-xs text-gray-400 dark:text-gray-500">12 min</span>
       </div>
     </div>
 
+    <!-- Área de chat (hidden inicialmente) -->
+    <div id="simpleChatBox" class="hidden absolute inset-0 bg-white dark:bg-gray-800 flex flex-col">
+      <!-- Encabezado del chat -->
+      <div class="flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-700 sticky top-0 bg-white dark:bg-gray-800 z-10">
+        <button id="backToContacts" class="mr-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <div class="flex-1 text-center">
+          <div class="text-sm font-medium text-gray-700 dark:text-gray-300" id="chatWithName">Hablando con: <span class="font-semibold text-gray-900 dark:text-white">Carlos Pérez</span></div>
+        </div>
+        <div class="w-6"></div> <!-- Espaciador para alinear el título al centro -->
+      </div>
+
+      <!-- Mensajes -->
+      <div id="simpleChatMessages" class="flex-1 p-4 overflow-y-auto space-y-3 bg-gray-50 dark:bg-gray-700/30">
+        <!-- Mensaje recibido -->
+        <div class="flex">
+          <div class="max-w-xs px-3 py-2 rounded-lg rounded-tl-none bg-gray-200 dark:bg-gray-600">
+            <p class="text-gray-800 dark:text-gray-200">Hola! ¿Cómo estás?</p>
+            <p class="text-right text-xs text-gray-500 dark:text-gray-400 mt-1">10:24 AM</p>
+          </div>
+        </div>
+        
+        <!-- Mensaje enviado -->
+        <div class="flex justify-end">
+          <div class="max-w-xs px-3 py-2 rounded-lg rounded-tr-none bg-indigo-500 text-white">
+            <p>Todo bien, gracias!</p>
+            <p class="text-right text-xs text-indigo-200 mt-1">10:25 AM</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input de mensaje -->
+      <div class="sticky bottom-0 p-4 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div class="flex gap-2">
+          <input type="text" id="simpleMessageInput" class="flex-1 border border-gray-300 dark:border-gray-600 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-700 dark:text-white" placeholder="Escribe un mensaje...">
+          <button onclick="sendSimpleMessage()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-full text-sm transition flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
 
 
 
@@ -768,7 +1005,6 @@
     </div>
   </div>
 </div>
-
 
 
 
@@ -2640,6 +2876,8 @@ function openSimpleChatWithUser(otherUid, otherName) {
   activeSimpleChatUid = [currentUid, otherUid].sort().join("_");
 
   document.getElementById("simpleChatBox").classList.remove("hidden");
+  document.getElementById("simpleFollowingList").classList.add("hidden");
+
   document.getElementById("chatWithName").textContent = "Hablando con: " + otherName;
 
   const messagesRef = collection(db, "chats", activeSimpleChatUid, "messages");
@@ -2647,10 +2885,12 @@ function openSimpleChatWithUser(otherUid, otherName) {
   const container = document.getElementById("simpleChatMessages");
   container.innerHTML = "";
 
+  // Cancela suscripción previa
   if (typeof unsubscribeSimpleChat === "function") {
     unsubscribeSimpleChat();
   }
 
+  // 💡 SUSCRIPCIÓN A MENSAJES EN TIEMPO REAL
   unsubscribeSimpleChat = onSnapshot(q, (snapshot) => {
     container.innerHTML = "";
 
@@ -2700,27 +2940,32 @@ function openSimpleChatWithUser(otherUid, otherName) {
 
       let pressTimer;
 
-      bubble.addEventListener("mousedown", (e) => {
-        if (e.target !== bubble) return;
-        pressTimer = setTimeout(() => showReactionMenu(msg, doc.id, reactionBar, e), 500);
-      });
-      bubble.addEventListener("mouseup", () => clearTimeout(pressTimer));
-      bubble.addEventListener("mouseleave", () => clearTimeout(pressTimer));
-      bubble.addEventListener("dblclick", (e) => {
-        if (e.target !== bubble) return;
-        showReactionMenu(msg, doc.id, reactionBar, e);
-      });
+      // 📱 Lógica para mantener pulsado o doble clic para reaccionar
+      const setupReactionEvents = () => {
+        bubble.addEventListener("mousedown", (e) => {
+          if (e.target !== bubble) return;
+          pressTimer = setTimeout(() => showReactionMenu(msg, doc.id, reactionBar, e), 500);
+        });
+        bubble.addEventListener("mouseup", () => clearTimeout(pressTimer));
+        bubble.addEventListener("mouseleave", () => clearTimeout(pressTimer));
+        bubble.addEventListener("dblclick", (e) => {
+          if (e.target !== bubble) return;
+          showReactionMenu(msg, doc.id, reactionBar, e);
+        });
 
-      bubble.addEventListener("touchstart", (e) => {
-        if (e.target !== bubble) return;
-        e.preventDefault();
-        pressTimer = setTimeout(
-          () => showReactionMenu(msg, doc.id, reactionBar, e.touches[0]),
-          500
-        );
-      });
-      bubble.addEventListener("touchend", () => clearTimeout(pressTimer));
-      bubble.addEventListener("touchcancel", () => clearTimeout(pressTimer));
+        bubble.addEventListener("touchstart", (e) => {
+          if (e.target !== bubble) return;
+          e.preventDefault();
+          pressTimer = setTimeout(
+            () => showReactionMenu(msg, doc.id, reactionBar, e.touches[0]),
+            500
+          );
+        });
+        bubble.addEventListener("touchend", () => clearTimeout(pressTimer));
+        bubble.addEventListener("touchcancel", () => clearTimeout(pressTimer));
+      };
+
+      setupReactionEvents();
 
       bubbleWrapper.appendChild(bubble);
       bubbleWrapper.appendChild(reactionBar);
@@ -3223,7 +3468,6 @@ function showToast(type, message) {
 
 
 
-
     // Funciones para cerrar modales
     window.closeMediaModal = function() {
       document.getElementById('mediaModal').classList.add('hidden');
@@ -3236,6 +3480,49 @@ function showToast(type, message) {
       document.getElementById('commentsModalContent').innerHTML = "";
       activePostId = "";
     };
+
+
+
+// 🔙 Botón para volver a la lista de contactos desde el chat
+    const backBtn = document.getElementById('backToContacts');
+    if (backBtn) {
+      backBtn.addEventListener('click', function () {
+        const chatBox = document.getElementById('simpleChatBox');
+        const contactList = document.getElementById('simpleFollowingList');
+
+        chatBox.classList.add('hidden');
+        contactList.classList.remove('hidden');
+      });
+    }
+
+
+
+
+
+
+
+const toggleButton = document.getElementById("theme-toggle");
+
+// Cargar la preferencia del usuario
+const currentTheme = localStorage.getItem("theme");
+if (currentTheme) {
+    document.body.classList.add(currentTheme);
+}
+
+// Cambiar el tema
+toggleButton.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    // Guardar la preferencia del usuario
+    if (document.body.classList.contains("dark-mode")) {
+        localStorage.setItem("theme", "dark-mode");
+    } else {
+        localStorage.setItem("theme", "");
+    }
+});
+
+
+
+
 
     // Iniciar
     listenForPosts();
@@ -3387,7 +3674,6 @@ publicarBtn?.addEventListener("click", async () => {
     publicarBtn.textContent = "Publicar"; // restaurar texto
   }
 });
-
 
 
 
