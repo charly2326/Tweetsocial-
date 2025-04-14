@@ -16,6 +16,7 @@
 
 <style>
 
+
 /* Estilos del contenedor de perfil */
 #profileContainer {
     position: fixed;
@@ -105,22 +106,21 @@
 
 
 
-
-
-
-
-
-
-
 /* Modo oscuro mejorado */
 /* ----- Textos y Botones Críticos ----- */
 body.dark-mode {
     background-color: #0f0f0f;  /* Fondo más claro que negro puro */
 }
 
+
+
+
+
+
+
 /* Títulos y textos principales */
-body.dark-mode .post-title, 
-body.dark-mode .username, 
+body.dark-mode .post-title,
+body.dark-mode .username,
 body.dark-mode .post-content {
     color: #f0f0f0 !important;  /* Blanco roto */
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* Mejor contraste */
@@ -179,14 +179,6 @@ body.dark-mode .stats-value {
 
 
 
-<!-- Animación -->
-@keyframes fade-in {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-.animate-fade-in {
-  animation: fade-in 0.3s ease-out forwards;
-}
 
 
 
@@ -195,6 +187,8 @@ body.dark-mode .stats-value {
 
 
 </style>
+
+
 </head>
 
 
@@ -317,20 +311,6 @@ body.dark-mode .stats-value {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!-- SIDEBAR MÓVIL (Bottom navbar) -->
 <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50">
   <ul class="flex justify-around py-2">
@@ -393,7 +373,6 @@ body.dark-mode .stats-value {
 
   </ul>
 </nav>
-
 
 
 
@@ -469,34 +448,53 @@ body.dark-mode .stats-value {
 
 
 
-    <!-- Modal de Login -->
-    <div id="loginModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div class="bg-white p-6 rounded-lg shadow-lg text-center w-96 relative">
-            <h2 class="text-xl font-bold mb-4">Bienvenido</h2>
-            <p class="text-gray-600 mb-4">Elige una opción para continuar</p>
+<!-- Modal de Login -->
+<div id="loginModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg shadow-xl text-center w-96 relative">
 
-            <!-- Botón para iniciar sesión como vendedor -->
-            <button id="sellerLoginBtn" class="w-full flex items-center justify-center bg-blue-600 text-white p-2 rounded mb-2">
-                <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" class="w-6 h-6 mr-2">
-                Continuar para vendedores
-            </button>
+        <h2 class="text-2xl font-extrabold text-gray-800 mb-3">Bienvenido</h2>
+        <p class="text-sm text-gray-500 mb-5">Elige una opción para continuar</p>
 
-            <!-- Botón para iniciar sesión con Google -->
-            <button id="googleLoginBtn" class="w-full flex items-center justify-center bg-red-600 text-white p-2 rounded">
-                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-6 h-6 mr-2">
-                Continuar con Google
-            </button>
+        <!-- Botón para iniciar sesión como vendedor -->
+        <button id="sellerLoginBtn" class="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 transition text-white p-2.5 rounded-lg mb-3 shadow">
+            <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" class="w-6 h-6">
+            <span class="font-medium">Continuar para vendedores</span>
+        </button>
 
-            <!-- Botón para cerrar el modal -->
-            <button id="closeModal" class="absolute top-2 right-2 text-gray-600 text-xl">&times;</button>
+        <!-- Botón para iniciar sesión con Google -->
+        <button id="googleLoginBtn" class="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 transition text-white p-2.5 rounded-lg shadow">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-6 h-6">
+            <span class="font-medium">Continuar con Google</span>
+        </button>
+
+        <!-- Pie con Términos y Condiciones -->
+        <div class="px-6 py-3 bg-gray-50 text-center border-t border-gray-200 rounded-b-lg mt-5">
+            <p class="text-xs text-gray-400">Al continuar aceptas nuestros <a href="#" class="text-blue-600 hover:underline">Términos y Condiciones</a></p>
         </div>
-    </div>
 
-    <!-- Contenedor del perfil -->
-    <div id="profileContainer" class="hidden flex items-center space-x-2 cursor-pointer">
-        <img id="profilePic" src="https://via.placeholder.com/40" alt="Perfil" class="w-10 h-10 rounded-full">
-        <span id="profileName" class="font-semibold"></span>
+        <!-- Botón para cerrar el modal -->
+        <button id="closeModal" class="absolute top-2 right-2 text-gray-500 text-2xl hover:text-gray-700 transition">&times;</button>
+
     </div>
+</div>
+
+<!-- Contenedor del perfil -->
+<div id="profileContainer" class="hidden flex items-center space-x-2 cursor-pointer">
+    <img id="profilePic" src="https://via.placeholder.com/40" alt="Perfil" class="w-10 h-10 rounded-full">
+    <span id="profileName" class="font-semibold"></span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
 
     
 
@@ -899,63 +897,140 @@ body.dark-mode .stats-value {
 
 
                                                                                                             
-<!-- ✅ Modal para publicaciones de vendedor -->
-<div id="sellerPostModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-  <div class="bg-white w-full max-w-md mx-auto mt-10 rounded-2xl p-6 shadow-lg relative flex flex-col">
-    <h2 class="text-xl font-semibold mb-4 text-center text-gray-800">🛍️ Publicar producto</h2>
 
-    <!-- Título -->
-    <input
-      id="productTitle"
-      type="text"
-      placeholder="Título del producto"
-      class="w-full border border-gray-300 rounded-lg p-2 mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-    />
 
-    <!-- Descripción -->
-    <textarea
-      id="productDescription"
-      placeholder="Descripción del producto"
-      class="w-full border border-gray-300 rounded-lg p-2 mb-3 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
-    ></textarea>
+<!-- Modal para publicaciones de vendedor - Versión corregida -->
+<div id="sellerPostModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+  <div class="bg-white dark:bg-gray-800 w-full max-w-md rounded-xl shadow-xl relative overflow-hidden">
+    <!-- Cabecera del modal -->
+    <div class="border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+      <h2 class="text-xl font-semibold text-gray-800 dark:text-white text-center flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-600 dark:text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
+        </svg>
+        Publicar producto
+      </h2>
+    </div>
 
-    <!-- Precio -->
-    <input
-      id="productPrice"
-      type="number"
-      placeholder="Precio (ej: 199.99)"
-      class="w-full border border-gray-300 rounded-lg p-2 mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-    />
+    <!-- Contenido del formulario -->
+    <div class="p-6 space-y-4">
+      <!-- Grupo de campos -->
+      <div class="space-y-1">
+        <label for="productTitle" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Título del producto</label>
+        <input
+          id="productTitle"
+          type="text"
+          placeholder="Ej: Camiseta de algodón 100%"
+          class="block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+          required
+        >
+      </div>
 
-    <!-- Imagen o video -->
-    <input
-      id="productImage"
-      type="file"
-      accept="image/*,video/*"
-      class="w-full mb-4"
-    />
+      <div class="space-y-1">
+        <label for="productDescription" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Descripción</label>
+        <textarea
+          id="productDescription"
+          rows="3"
+          placeholder="Describa las características del producto..."
+          class="block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+          required
+        ></textarea>
+      </div>
 
-    <!-- Botones -->
-    <div class="flex justify-between items-center mt-2">
-      <!-- Cancelar -->
+      <div class="grid grid-cols-2 gap-4">
+        <div class="space-y-1">
+          <label for="productPrice" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Precio ($)</label>
+          <div class="relative rounded-md shadow-sm">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <span class="text-gray-500 dark:text-gray-400 sm:text-sm">$</span>
+            </div>
+            <input
+              id="productPrice"
+              type="number"
+              step="0.01"
+              min="0"
+              placeholder="0.00"
+              class="block w-full pl-7 pr-12 rounded-lg border-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+              required
+            >
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              <span class="text-gray-500 dark:text-gray-400 sm:text-sm">USD</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Código de país y número de teléfono -->
+        <div class="grid grid-cols-2 gap-4">
+          <!-- Código de país -->
+          <div class="space-y-1">
+            <label for="codigoPais" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Código de país</label>
+            <input
+              id="codigoPais"
+              type="text"
+              placeholder="Ej: +57"
+              class="block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+              required
+            >
+          </div>
+
+          <!-- Número de teléfono -->
+          <div class="space-y-1">
+            <label for="productWhatsapp" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Número de WhatsApp</label>
+            <input
+              id="productWhatsapp"
+              type="tel"
+              placeholder="Ej: 3001234567"
+              class="block w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+              required
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-1">
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Imagen/Vídeo</label>
+        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-lg">
+          <div class="space-y-1 text-center">
+            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+              <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <div class="flex text-sm text-gray-600 dark:text-gray-400">
+              <label for="productImage" class="relative cursor-pointer bg-white dark:bg-gray-800 rounded-md font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 focus-within:outline-none">
+                <span>Subir archivo</span>
+                <input id="productImage" type="file" accept="image/*,video/*" class="sr-only" multiple>
+              </label>
+              <p class="pl-1">o arrastrar aquí</p>
+            </div>
+            <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG, MP4 hasta 10MB</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pie del modal -->
+    <div class="bg-gray-50 dark:bg-gray-700 px-6 py-4 flex justify-between items-center border-t border-gray-200 dark:border-gray-600">
       <button
         onclick="closeSellerPostModal()"
-        class="text-sm text-gray-500 hover:text-gray-700 transition"
+        class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-4 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
       >
         Cancelar
       </button>
-
-      <!-- Publicar -->
       <button
         id="publicarProductoBtn"
         onclick="publicarProducto()"
-        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"
+        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800"
       >
-        Publicar
+        <svg xmlns="http://www.w3.org/2000/svg" class="-ml-1 mr-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
+        </svg>
+        Publicar producto
       </button>
     </div>
   </div>
 </div>
+
+
+
 
 
 
@@ -977,34 +1052,6 @@ body.dark-mode .stats-value {
 
 
 
-<!-- Modal de compra -->
-<div id="purchaseModal" class="hidden fixed inset-0 bg-black bg-opacity-50 justify-center items-center z-50">
-  <div class="bg-white p-6 rounded shadow-md max-w-sm w-full">
-    <h2 class="text-xl font-semibold mb-4" id="modalPurchaseTitle">Producto</h2>
-    <p id="modalPurchasePrice" class="mb-4 text-gray-700">💰 Precio</p>
-
-    <div id="paymentOptions" class="space-y-3">
-      <button
-        class="btn-pagar-tarjeta bg-green-600 text-white w-full py-2 rounded"
-        data-titulo="Producto"
-        data-precio="199"
-        id="pagar"
-      >
-        💳 Pagar con tarjeta
-      </button>
-
-      <button class="bg-blue-500 text-white w-full py-2 rounded">
-        🅿️ Pagar con PayPal
-      </button>
-    </div>
-
-    <div class="flex justify-end mt-4">
-      <button id="cancelPurchaseBtn" class="text-gray-600 hover:underline">
-        Cancelar
-      </button>
-    </div>
-  </div>
-</div>
 
 
 
@@ -1072,6 +1119,7 @@ import {
   const provider = new GoogleAuthProvider();
 
   // Aquí continúa el resto de tu lógica (login, publicaciones, perfiles, etc.)
+
 
 
 
@@ -1714,24 +1762,6 @@ async function loadProfileCounts(uid) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ========== 🔧 FUNCIONES GLOBALES ==========
 function openModal() {
   const user = auth.currentUser;
@@ -1825,6 +1855,9 @@ function toggleSidebar(open) {
   }
 }
 
+
+
+
 // ✅ Listeners para el modal (PC y móvil)
 document.addEventListener("DOMContentLoaded", () => {
   const profileContainerSidebar = document.getElementById("profileContainerSidebar");
@@ -1849,7 +1882,6 @@ document.getElementById("loginBtn")?.addEventListener("click", () => {
   const modal = document.getElementById("loginModal");
   if (modal) {
     modal.classList.remove("hidden");
-    modal.style.display = "flex";
   }
 });
 
@@ -1858,7 +1890,6 @@ document.getElementById("closeModal")?.addEventListener("click", () => {
   const modal = document.getElementById("loginModal");
   if (modal) {
     modal.classList.add("hidden");
-    modal.style.display = "none";
   }
 });
 
@@ -1871,123 +1902,6 @@ document.getElementById("sellerLoginBtn")?.addEventListener("click", () => {
 document.getElementById("googleLoginBtn")?.addEventListener("click", () => {
   login(); // también tienes esta función
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// 🛒 Mostrar modal de compra al hacer clic en "Comprar"
-document.addEventListener("click", (e) => {
-  const comprarBtn = e.target.closest(".comprar-btn");
-  if (comprarBtn) {
-    const titulo = comprarBtn.getAttribute("data-titulo");
-    const precio = comprarBtn.getAttribute("data-precio");
-
-    // Actualizar contenido del modal
-    document.getElementById("modalPurchaseTitle").textContent = `Producto: ${titulo}`;
-    document.getElementById("modalPurchasePrice").textContent = `💰 Precio: $${precio}`;
-    document.getElementById("purchaseModal").classList.remove("hidden");
-    document.getElementById("purchaseModal").classList.add("flex");
-
-    // Actualizar atributos del botón "Pagar con tarjeta"
-    const pagarBtn = document.querySelector(".btn-pagar-tarjeta");
-    if (pagarBtn) {
-      pagarBtn.setAttribute("data-titulo", titulo);
-      pagarBtn.setAttribute("data-precio", precio);
-    }
-  }
-
-  // ❌ Cerrar modal al hacer clic en "Cancelar" o fuera del modal
-  if (e.target.id === "cancelPurchaseBtn" || e.target.id === "purchaseModal") {
-    closePurchaseModal();
-  }
-});
-
-// 🔐 Función para cerrar el modal
-function closePurchaseModal() {
-  const modal = document.getElementById("purchaseModal");
-  modal.classList.add("hidden");
-  modal.classList.remove("flex");
-}
-
-
-
-
-
-
-
-
-document.addEventListener("click", async (e) => {
-  const btn = e.target.closest('.btn-pagar-tarjeta');
-  if (!btn) return;
-
-  const titulo = btn.getAttribute("data-titulo");
-  const precio = parseFloat(btn.getAttribute("data-precio"));
-
-  if (!titulo || isNaN(precio)) {
-    alert("❌ Faltan datos del producto.");
-    return;
-  }
-
-  try {
-    const response = await fetch('https://bfc27add-9c20-4309-b9bd-7759f34f76a8-00-1ykxkb9jqj534.janeway.replit.dev/api/checkout/create-session', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        productName: titulo,
-        amount: Math.round(precio * 100),
-        successUrl: "https://tweet-1de1a.web.app/success",
-        cancelUrl: "https://tweet-1de1a.web.app/cancel"
-      })
-    });
-
-    const data = await response.json();
-
-    if (data.success) {
-      window.location.href = data.url;
-    } else {
-      alert('Error al crear la sesión de pago: ' + (data.error?.message || data.message || 'Error desconocido'));
-    }
-  } catch (error) {
-    console.error('Error:', error);
-    alert('Error al conectar con el servidor de pagos');
-  }
-});
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2350,30 +2264,43 @@ function renderPostHTML(docData, userData = {}, postId = "") {
     </div>
   `;
 
-  if (docData.tipo === "venta") {
-    return `
-      <div class="post bg-white p-5 rounded-lg shadow-md mt-4 border border-gray-200" data-post-id="${postId}">
-        ${userHeader}
-        <h3 class="text-xl font-bold text-gray-800 mb-2">${docData.titulo || "Producto sin título"}</h3>
-        <p class="text-gray-700 mb-3 leading-relaxed">${docData.descripcion || ""}</p>
-        ${mediaBlock || `<div class="bg-blue-100 p-4 rounded-lg mb-3 text-center text-blue-800 font-bold">💰 Precio: ${docData.precio || 0} USD</div>`}
-        <div class="flex justify-between items-center mt-3">
-          <div class="flex space-x-2">
-            ${interactionButtons(postId)}
-          </div>
-          <button class="comprar-btn bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-full shadow-md transition-all flex items-center">
+if (docData.tipo === "venta") {
+  const numeroWhatsApp = docData.whatsapp ? docData.whatsapp.replace(/\D/g, '') : null;
+
+  return `
+    <div class="post bg-white p-5 rounded-lg shadow-md mt-4 border border-gray-200" data-post-id="${postId}">
+      ${userHeader}
+      <h3 class="text-xl font-bold text-gray-800 mb-2">${docData.titulo || "Producto sin título"}</h3>
+      <p class="text-gray-700 mb-3 leading-relaxed">${docData.descripcion || ""}</p>
+      
+      ${mediaBlock || ""}
+
+      <div class="bg-blue-100 p-4 rounded-lg mb-3 text-center text-blue-800 font-bold">
+        💰 Precio: ${docData.precio || "No especificado"}
+      </div>
+
+      <div class="flex justify-between items-center mt-3">
+        <div class="flex space-x-2">
+          ${interactionButtons(postId)}
+        </div>
+
+        ${numeroWhatsApp ? `
+          <a href="https://wa.me/${numeroWhatsApp}" target="_blank"
+            class="comprar-btn bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-full shadow-md transition-all flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none"
               viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17" />
             </svg>
             Comprar
-          </button>
-        </div>
-        ${commentsBlock}
+          </a>
+        ` : ""}
       </div>
-    `;
-  }
+
+      ${commentsBlock}
+    </div>
+  `;
+}
 
   return `
     <div class="post bg-white p-5 rounded-lg shadow-md mt-4 border border-gray-200 hover:shadow-lg transition-shadow" data-post-id="${postId}">
@@ -3119,6 +3046,7 @@ if (!window.__MODULO_PUBLICACION_PRODUCTOS_ACTIVO) {
     const auth = getAuth();
     const db = getFirestore();
 
+
     // Configuración inicial
     const venderBtn = document.getElementById('venderBtn');
     const sellerPostModal = document.getElementById('sellerPostModal');
@@ -3135,76 +3063,77 @@ if (!window.__MODULO_PUBLICACION_PRODUCTOS_ACTIVO) {
       };
     }
 
+
     // Función para publicar producto
-    window.publicarProducto = async function() {
-      const btn = document.getElementById("publicarProductoBtn");
+window.publicarProducto = async function () {
+  const btn = document.getElementById("publicarProductoBtn");
+  if (!btn) return;
+
+  btn.disabled = true;
+
+  // Preparar textos y spinner (en caso de que los uses)
+  const btnText = btn.querySelector(".btn-text");
+  const spinner = btn.querySelector(".spinner");
+  if (btnText) btnText.textContent = "Publicando...";
+  if (spinner) spinner.classList.remove("hidden");
+
+  try {
+    const titulo = document.getElementById('productTitle').value.trim();
+    const descripcion = document.getElementById('productDescription').value.trim();
+    const precio = document.getElementById('productPrice').value.trim();
+    const codigoPais = document.getElementById('codigoPais').value.trim();
+    const numero = document.getElementById('productWhatsapp').value.trim();
+    const imagenFile = document.getElementById('productImage').files[0];
+
+    if (!titulo || !descripcion || !precio || !codigoPais || !numero || !imagenFile) {
+      throw new Error('Completa todos los campos, incluido el número de WhatsApp.');
+    }
+
+    const whatsappCompleto = `${codigoPais}${numero}`;
+    const whatsappRegex = /^\+\d{1,4}\d{6,14}$/; // Ej: +573001234567
+
+    if (!whatsappRegex.test(whatsappCompleto)) {
+      throw new Error('Por favor, ingresa un número de WhatsApp válido con código de país (Ej: +57...).');
+    }
+
+    const user = auth.currentUser;
+    if (!user) throw new Error('Debes iniciar sesión primero.');
+
+    const mediaURL = await uploadMediaToCloudinary(imagenFile);
+
+    await addDoc(collection(db, "posts"), {
+      tipo: "venta",
+      titulo,
+      descripcion,
+      precio,
+      whatsapp: whatsappCompleto,
+      imagen: mediaURL,
+      isVideo: imagenFile.type.startsWith('video/'),
+      username: user.displayName || "Usuario",
+      photoURL: user.photoURL || "https://via.placeholder.com/40",
+      uid: user.uid,
+      timestamp: serverTimestamp()
+    });
+
+    // Limpiar campos
+    ['productTitle', 'productDescription', 'productPrice', 'codigoPais', 'productWhatsapp'].forEach(id => {
+      document.getElementById(id).value = "";
+    });
+    document.getElementById('productImage').value = "";
+
+    closeSellerPostModal();
+    alert("✅ Producto publicado exitosamente.");
+  } catch (error) {
+    console.error("❌ Error al publicar:", error);
+    alert(error.message);
+  } finally {
+    btn.disabled = false;
+    if (btnText) btnText.textContent = "Publicar producto";
+    if (spinner) spinner.classList.add("hidden");
+  }
+};
 
 
-
-if (!btn) return;
-
-btn.disabled = true;
-const btnText = btn.querySelector(".btn-text");
-const spinner = btn.querySelector(".spinner");
-
-if (btnText) btnText.textContent = "Publicando...";
-if (spinner) spinner.classList.remove("hidden");
-
-
-
-      try {
-        // Validación y obtención de datos del formulario
-        const [titulo, descripcion, precio, imagenFile] = [
-          document.getElementById('productTitle').value,
-          document.getElementById('productDescription').value,
-          document.getElementById('productPrice').value,
-          document.getElementById('productImage').files[0]
-        ];
-
-        if (!titulo || !descripcion || !precio || !imagenFile) {
-          throw new Error('Completa todos los campos.');
-        }
-
-        const user = auth.currentUser;
-        if (!user) throw new Error('Debes iniciar sesión primero.');
-
-        // Subir imagen a Cloudinary
-        const mediaURL = await uploadMediaToCloudinary(imagenFile);
-
-        // Publicar en Firestore
-        await addDoc(collection(db, "posts"), {
-          tipo: "venta",
-          titulo,
-          descripcion,
-          precio,
-          imagen: mediaURL,
-          isVideo: imagenFile.type.startsWith('video/'),
-          username: user.displayName || "Usuario",
-          photoURL: user.photoURL || "https://via.placeholder.com/40",
-          uid: user.uid,
-          timestamp: serverTimestamp()
-        });
-
-        // Limpiar formulario
-        ['productTitle', 'productDescription', 'productPrice', 'productImage'].forEach(id => {
-          document.getElementById(id).value = "";
-        });
-
-        closeSellerPostModal();
-        alert("✅ Producto publicado exitosamente.");
-      } catch (error) {
-        console.error("❌ Error al publicar:", error);
-        alert(error.message);
-      } finally {
-        if (btn) {
-          btn.disabled = false;
-          const btnText = btn.querySelector(".btn-text");
-          if (btnText) btnText.textContent = "Publicar";
-          const spinner = btn.querySelector(".spinner");
-          if (spinner) spinner.classList.add("hidden");
-        }
-      }
-    };
 
 
     // Escuchar posts en tiempo real
@@ -3225,6 +3154,12 @@ if (spinner) spinner.classList.remove("hidden");
         console.error("Error en snapshot:", error);
       });
     }
+
+
+
+
+
+
 
     // Manejadores de eventos unificados
     document.addEventListener('click', async function(e) {
@@ -3466,8 +3401,6 @@ function showToast(type, message) {
 }
 
 
-
-
     // Funciones para cerrar modales
     window.closeMediaModal = function() {
       document.getElementById('mediaModal').classList.add('hidden');
@@ -3497,10 +3430,6 @@ function showToast(type, message) {
 
 
 
-
-
-
-
 const toggleButton = document.getElementById("theme-toggle");
 
 // Cargar la preferencia del usuario
@@ -3524,31 +3453,13 @@ toggleButton.addEventListener("click", () => {
 
 
 
+
+
+
     // Iniciar
     listenForPosts();
   });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -3613,6 +3524,12 @@ toggleButton.addEventListener("click", () => {
 
 
 
+
+
+
+
+
+
 // Manejo de Interacciones Móviles y Perfil
 document.getElementById("mobileEditBtn").addEventListener("click", () => {
   document.getElementById("openEditProfileFromModal").click();
@@ -3637,7 +3554,7 @@ function mostrarPerfil(nombreUsuario, fotoUrl) {
   document.getElementById("loginBtn").classList.add("hidden");
   document.getElementById("profileContainerSidebar").classList.remove("hidden");
   document.getElementById("usernameSidebar").innerText = nombreUsuario;
-  document.getElementById("profilePicSidebar").src = fotoUrl;                                             
+  document.getElementById("profilePicSidebar").src = fotoUrl;
   // Mostrar en móvil
   document.getElementById("loginBtnMobile").classList.add("hidden");
   document.getElementById("profileContainerMobile").classList.remove("hidden");
@@ -3646,36 +3563,6 @@ function mostrarPerfil(nombreUsuario, fotoUrl) {
 
 // Simulación: ya estabas logueado
 // mostrarPerfil("Carlos", "https://i.pravatar.cc/100");
-
-
-
-
-
-
-
-
-
-
-const publicarBtn = document.getElementById("publicarBtn");
-
-publicarBtn?.addEventListener("click", async () => {
-  if (publicarBtn.disabled) return; // evita múltiples clics
-
-  publicarBtn.disabled = true; // desactiva botón
-  publicarBtn.textContent = "Publicando..."; // opcional: cambiar texto
-
-  try {
-    await publicarPost(); // tu función principal para publicar
-    // opcional: feedback visual o redirección
-  } catch (error) {
-    console.error("❌ Error al publicar:", error);
-    alert("Ocurrió un error al publicar. Intenta de nuevo.");
-    publicarBtn.disabled = false; // reactivar si falla
-    publicarBtn.textContent = "Publicar"; // restaurar texto
-  }
-});
-
-
 
 
 
