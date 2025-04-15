@@ -12,6 +12,8 @@
 <style>
 
 
+
+
 /* Estilos del contenedor de perfil */
 #profileContainer {
     position: fixed;
@@ -167,6 +169,58 @@ body.dark-mode .stats-value {
 
 
 
+/* Sidebar principal (PC) */
+#pcSidebar {
+  transition: all 0.3s ease;
+  display: block;
+}
+
+/* Sidebar móvil */
+#mobileSidebar {
+  transition: all 0.3s ease;
+  display: none;
+}
+
+/* Clase para ocultar elementos */
+.hidden {
+  display: none !important;
+}
+
+/* Media queries para dispositivos móviles */
+@media (max-width: 768px) {
+  #pcSidebar {
+    display: none !important;
+  }
+
+  #mobileSidebar {
+    display: block;
+  }
+
+  /* Asegurar que el sidebar móvil se oculte si no hay posts */
+  #mobileSidebar.hidden {
+    display: none !important;
+  }
+}
+
+@media (min-width: 769px) {
+  #pcSidebar:not(.hidden) {
+    display: block !important;
+  }
+
+  #mobileSidebar {
+    display: none !important;
+  }
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -184,13 +238,19 @@ body.dark-mode .stats-value {
 </style>
 
 
+
+ 
 </head>
+
 
 
 <body class="bg-gray-50 dark:bg-gray-900">
     <div class="flex min-h-screen">
         <!-- Sidebar moderno con glassmorphism -->
-        <aside id="sidebar" class="bg-white/80 dark:bg-gray-800/90 backdrop-blur-lg border-r border-gray-200 dark:border-gray-700 sticky top-0 h-screen overflow-y-auto transition-all duration-300 w-72">
+
+<aside id="sidebar" class="hidden md:block bg-white/80 dark:bg-gray-800/90 backdrop-blur-lg border-r border-gray-200 dark:border-gray-700 sticky top-0 h-screen overflow-y-auto transition-all duration-300 w-72">
+
+
             <!-- Botón para contraer/expandir mejorado -->
             <button id="toggleSidebar" class="absolute -right-3 top-5 bg-white dark:bg-gray-700 rounded-full shadow-lg p-1.5 z-10 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -291,6 +351,8 @@ body.dark-mode .stats-value {
                 </button>
             </div>
         </aside>
+
+
 
 
 
@@ -1757,6 +1819,11 @@ async function loadProfileCounts(uid) {
 
 
 
+
+
+
+
+
 // ========== 🔧 FUNCIONES GLOBALES ==========
 function openModal() {
   const user = auth.currentUser;
@@ -1853,50 +1920,80 @@ function toggleSidebar(open) {
 
 
 
-// ✅ Listeners para el modal (PC y móvil)
+// ✅ Listeners para el modal (PC y móvil) y comportamiento responsive
 document.addEventListener("DOMContentLoaded", () => {
   const profileContainerSidebar = document.getElementById("profileContainerSidebar");
   const mobilePerfilBtn = document.getElementById("mobilePerfilBtn");
   const closeProfileModal = document.getElementById("closeProfileModal");
   const modalOverlay = document.getElementById("modalOverlay");
+  const sidebar = document.getElementById("sidebar");
 
+  // 👉 Mostrar/ocultar modal de perfil
   profileContainerSidebar?.addEventListener("click", openModal);
   mobilePerfilBtn?.addEventListener("click", openModal);
   closeProfileModal?.addEventListener("click", closeModal);
   modalOverlay?.addEventListener("click", closeModal);
 
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      closeModal();
-    }
+    if (event.key === "Escape") closeModal();
   });
+
+  // 👉 Mostrar sidebar si cambia el tamaño a escritorio
+  function handleResponsiveSidebar() {
+    const isDesktop = window.innerWidth >= 768;
+    if (sidebar) {
+      if (isDesktop) {
+        sidebar.classList.remove("hidden");
+      } else {
+        sidebar.classList.add("hidden");
+      }
+    }
+  }
+
+  // Ejecutar al cargar y al redimensionar
+  handleResponsiveSidebar();
+  window.addEventListener("resize", handleResponsiveSidebar);
 });
 
 // 👉 Abrir modal de login
 document.getElementById("loginBtn")?.addEventListener("click", () => {
   const modal = document.getElementById("loginModal");
-  if (modal) {
-    modal.classList.remove("hidden");
-  }
+  if (modal) modal.classList.remove("hidden");
 });
 
 // 👉 Cerrar modal de login
 document.getElementById("closeModal")?.addEventListener("click", () => {
   const modal = document.getElementById("loginModal");
-  if (modal) {
-    modal.classList.add("hidden");
-  }
+  if (modal) modal.classList.add("hidden");
 });
 
 // 👉 Listener para botón de login como vendedor
 document.getElementById("sellerLoginBtn")?.addEventListener("click", () => {
-  loginAsSeller(); // ya tienes esta función definida
+  loginAsSeller();
 });
 
 // 👉 Listener para botón de login con Google
 document.getElementById("googleLoginBtn")?.addEventListener("click", () => {
-  login(); // también tienes esta función
+  login();
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2112,6 +2209,8 @@ document.getElementById("publishBtn")?.addEventListener("click", async (e) => {
     btn.textContent = "Publicar";
   }
 });
+
+
 
 
 
@@ -3085,7 +3184,7 @@ window.publicarProducto = async function () {
     }
 
     const whatsappCompleto = `${codigoPais}${numero}`;
-    const whatsappRegex = /^\+\d{1,4}\d{6,14}$/; // Ej: +573001234567
+    const whatsappRegex = /^\+\d{1,4}\d{6,14}$/;
 
     if (!whatsappRegex.test(whatsappCompleto)) {
       throw new Error('Por favor, ingresa un número de WhatsApp válido con código de país (Ej: +57...).');
@@ -3093,6 +3192,9 @@ window.publicarProducto = async function () {
 
     const user = auth.currentUser;
     if (!user) throw new Error('Debes iniciar sesión primero.');
+
+    // Verificar si la foto de perfil está disponible desde Firebase Auth
+    const photoURL = user.photoURL || "https://via.placeholder.com/40"; // Si no hay foto, se usa la predeterminada
 
     const mediaURL = await uploadMediaToCloudinary(imagenFile);
 
@@ -3105,7 +3207,7 @@ window.publicarProducto = async function () {
       imagen: mediaURL,
       isVideo: imagenFile.type.startsWith('video/'),
       username: user.displayName || "Usuario",
-      photoURL: user.photoURL || "https://via.placeholder.com/40",
+      photoURL: photoURL, // Usar directamente la foto de Firebase Auth
       uid: user.uid,
       timestamp: serverTimestamp()
     });
@@ -3127,6 +3229,8 @@ window.publicarProducto = async function () {
     if (spinner) spinner.classList.add("hidden");
   }
 };
+
+
 
 
 
@@ -3524,7 +3628,6 @@ toggleButton.addEventListener("click", () => {
 
 
 
-
 // Manejo de Interacciones Móviles y Perfil
 document.getElementById("mobileEditBtn").addEventListener("click", () => {
   document.getElementById("openEditProfileFromModal").click();
@@ -3558,10 +3661,6 @@ function mostrarPerfil(nombreUsuario, fotoUrl) {
 
 // Simulación: ya estabas logueado
 // mostrarPerfil("Carlos", "https://i.pravatar.cc/100");
-
-
-
-
 
 
 
